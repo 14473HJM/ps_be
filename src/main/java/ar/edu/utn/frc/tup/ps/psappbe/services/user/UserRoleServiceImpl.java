@@ -1,7 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.UserRole;
-import ar.edu.utn.frc.tup.ps.psappbe.entities.UserRoleEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserRoleEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRoleRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
 import lombok.RequiredArgsConstructor;

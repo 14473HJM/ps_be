@@ -1,13 +1,11 @@
-package ar.edu.utn.frc.tup.ps.psappbe.entities;
+package ar.edu.utn.frc.tup.ps.psappbe.entities.user;
 
+import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,17 +16,17 @@ import static javax.persistence.GenerationType.AUTO;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+@Table(name = "users")
+public class UserEntity extends CommonFieldsEntity {
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
+    @Column(unique=true)
     private String userName;
-    private String name;
-    private String lastName;
-    private String email;
     private String password;
-    @ManyToMany(fetch = EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<UserRoleEntity> roles;
     private Boolean enabled;
     private Boolean accountExpired;

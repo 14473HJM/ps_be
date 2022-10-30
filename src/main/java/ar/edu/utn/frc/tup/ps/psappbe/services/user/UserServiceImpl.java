@@ -1,7 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
-import ar.edu.utn.frc.tup.ps.psappbe.entities.UserEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 
 @Service
@@ -30,5 +31,15 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     @Override
     protected ModelMapper getModelMapper() {
         return modelMapper;
+    }
+
+    @Override
+    public User getByUserName(String userName) {
+        Optional<UserEntity> optional = userRepository.findByUserName(userName);
+        if(optional.isPresent()) {
+            return modelMapper.map(optional.get(), User.class);
+        } else {
+            return null;
+        }
     }
 }

@@ -1,6 +1,6 @@
 package ar.edu.utn.frc.tup.ps.psappbe.domain.user;
 
-import ar.edu.utn.frc.tup.ps.psappbe.entities.UserEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
