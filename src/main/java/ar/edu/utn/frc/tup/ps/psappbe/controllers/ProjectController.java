@@ -1,13 +1,17 @@
 package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 
 
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
+import ar.edu.utn.frc.tup.ps.psappbe.services.project.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ps")
@@ -15,20 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ProjectController {
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/admin")
-    public ResponseEntity<String> getAdmin() {
-        return ResponseEntity.ok("Admin");
-    }
-
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-    @GetMapping("/user")
-    public ResponseEntity<String> getUser() {
-        return ResponseEntity.ok("User");
-    }
+    private final ProjectService projectService;
 
     @GetMapping("/projects")
-    public ResponseEntity<String> getProjects() {
-        return ResponseEntity.ok("Projects");
+    public ResponseEntity<List<Project>> getAll() {
+        return ResponseEntity.ok(projectService.getAll());
     }
+
+
 }

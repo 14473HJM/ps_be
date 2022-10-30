@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -49,20 +50,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrrf -> csrrf.ignoringAntMatchers("/h2-console/**"))
+                //.csrf(csrrf -> csrrf.ignoringAntMatchers("/h2-console/**"))
                 .csrf().disable()
                 .authorizeRequests(
                         auth -> auth
-                                .mvcMatchers("/ps/login").permitAll()
-                                .anyRequest().authenticated()
+                                .mvcMatchers("/oauth/login").permitAll()
+                                //.mvcMatchers("/ps/users*").permitAll()
+                                //.anyRequest().authenticated()
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling(
-                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
+//                .exceptionHandling(
+//                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+//                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+//                )
                 .build();
     }
 
