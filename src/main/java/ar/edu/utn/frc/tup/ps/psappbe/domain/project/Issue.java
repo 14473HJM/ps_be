@@ -14,6 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Issue extends CommonFields {
 
+    public static final String OBJECT_TYPE = "ISSUE";
+
     private LocalDate dueDate;
     private IssueStatus issueStatus;
     private String summary;
@@ -21,4 +23,10 @@ public class Issue extends CommonFields {
     private Person informer;
     private Person responsible;
     private Conversation conversation;
+
+
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

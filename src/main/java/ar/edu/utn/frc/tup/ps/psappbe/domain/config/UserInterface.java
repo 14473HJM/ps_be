@@ -14,7 +14,13 @@ public class UserInterface extends CommonFields {
     /**
      * WEB, MOBILE, DESKTOP
      */
+    public static final String OBJECT_TYPE = "USER_INTERFACE";
 
     private String type;
     private String name;
+
+    @Override
+    public String getObjectTypeName() {
+        return this.OBJECT_TYPE;
+    }
 }

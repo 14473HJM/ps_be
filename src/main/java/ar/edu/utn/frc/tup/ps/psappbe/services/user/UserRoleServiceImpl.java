@@ -1,7 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
-import ar.edu.utn.frc.tup.ps.psappbe.domain.user.UserRole;
-import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserRoleEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.RoleEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRoleRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserRoleServiceImpl extends BaseModelServiceImpl<UserRole, UserRoleEntity> implements UserRoleService {
+public class UserRoleServiceImpl extends BaseModelServiceImpl<Role, RoleEntity> implements UserRoleService {
 
     private final UserRoleRepository userRoleRepository;
 

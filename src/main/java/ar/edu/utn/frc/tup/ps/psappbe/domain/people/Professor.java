@@ -11,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Professor {
 
+    public static final String OBJECT_TYPE = "PROFESSOR";
+
     private Identification universityIdentification;
     private List<Contact> universityContacts;
     private String universityProfile;

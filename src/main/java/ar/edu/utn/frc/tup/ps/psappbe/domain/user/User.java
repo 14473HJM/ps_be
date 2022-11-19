@@ -1,5 +1,6 @@
 package ar.edu.utn.frc.tup.ps.psappbe.domain.user;
 
+import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +12,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    private Long id;
+public class User extends CommonFields {
+
+    public static final String OBJECT_TYPE = "USER";
+
     private String userName;
     private String password;
     private Person person;
-    private List<UserRole> roles;
+    private List<Role> roles;
     private Boolean enabled;
     private Boolean accountExpired;
     private Boolean accountLocked;
@@ -24,4 +27,8 @@ public class User {
     private Boolean credentialExpired;
     private String avatar;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

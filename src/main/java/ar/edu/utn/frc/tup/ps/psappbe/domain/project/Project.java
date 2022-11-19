@@ -18,31 +18,37 @@ import java.util.List;
 @NoArgsConstructor
 public class Project extends CommonFields {
 
-    private String name;
-    private String description;
-    private ProjectType projectType;
-    private ProjectStatus projectStatus;
-    private LocalDate endDate;
-    private String projectTheme;
-    private Boolean isRealProject;
-    private String imageLink;
+    public static final String OBJECT_TYPE = "PROJECT";
 
-    private IssueTracker issueTracker;
-    private List<CodeRepository> codeRepositories;
-    private List<SystemComponent> systemComponents;
+    private String name; //MVP
+    private String description; //MVP
+    private ProjectType projectType; //MVP
+    private ProjectStatus projectStatus; //MVP
+    private LocalDate endDate; //MVP
+    private String projectTheme; //MVP
+    private Boolean isRealProject; //MVP
+    private String imageLink; //MVP
 
-    private Student student;
-    private Professor tutor;
-    private List<Professor> observers;
-    private List<Valuation> valuations;
-    private AcademicCondition academicCondition;
+    private IssueTracker issueTracker; //MVP
+    private List<CodeRepository> codeRepositories; //MVP
+    private List<SystemComponent> systemComponents; //MVP
 
-    private List<Meeting> meetings;
-    private Conversation conversation;
-    private List<Issue> issues;
+    private Student student; //MVP
+    private Professor tutor; //MVP
+    private List<Professor> observers; //NO MVP
+    private List<Valuation> valuations; //MVP
+    private AcademicCondition academicCondition; //MVP
 
-    private List<Attachment> attachments;
-    private ProjectPresentation projectPresentation;
+    private List<Meeting> meetings; //NO MVP
+    private Conversation conversation; //MVP
+    private List<Issue> issues; //NO MVP
+
+    private List<Attachment> attachments; //MVP
+    private ProjectPresentation projectPresentation; //MVP
 
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

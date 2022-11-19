@@ -1,9 +1,9 @@
 package ar.edu.utn.frc.tup.ps.psappbe.repository;
 
-import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserRoleEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
+public interface UserRoleRepository extends JpaRepository<RoleEntity, Long> {
 
-    UserRoleEntity findByName(String name);
+    RoleEntity findByName(String name);
 }

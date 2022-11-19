@@ -15,7 +15,13 @@ public class CodeLanguage extends CommonFields {
     /**
      * JAVA, PHP, JS, C#
      */
+    public static final String OBJECT_TYPE = "CODE_LANGUAGE";
 
     private String type;
     private String name;
+
+    @Override
+    public String getObjectTypeName() {
+        return this.OBJECT_TYPE;
+    }
 }

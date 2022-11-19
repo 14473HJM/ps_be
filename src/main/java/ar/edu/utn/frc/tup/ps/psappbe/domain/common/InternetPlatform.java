@@ -10,7 +10,7 @@ public enum InternetPlatform {
     LINKEDIN("", "", true, false),
     FACEBOOK("", "", true, false),
     INSTAGRAM("", "", true, false),
-    TWEETER("", "", true, false),
+    TWITTER("", "", true, false),
     YOUTUBE("", "", true, false),
     GITHUB("", "", false, true),
     GITLAB("", "", false, true),

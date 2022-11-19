@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -20,7 +21,7 @@ import static javax.persistence.GenerationType.AUTO;
 public class CommonFieldsEntity {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String objectType;
     private LocalDateTime createdDate;

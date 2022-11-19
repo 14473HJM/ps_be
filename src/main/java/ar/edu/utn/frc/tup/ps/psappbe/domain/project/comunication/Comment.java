@@ -11,6 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Comment extends CommonFields {
 
+    public static final String OBJECT_TYPE = "COMMENT";
+
     private Person commentator;
     private String comment;
+
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

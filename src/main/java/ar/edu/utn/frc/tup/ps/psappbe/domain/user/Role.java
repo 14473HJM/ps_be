@@ -1,4 +1,4 @@
-package ar.edu.utn.frc.tup.ps.psappbe.domain.people;
+package ar.edu.utn.frc.tup.ps.psappbe.domain.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import lombok.AllArgsConstructor;
@@ -8,15 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contact extends CommonFields {
+public class Role extends CommonFields {
 
-    public static final String OBJECT_TYPE = "CONTACT";
+    public static final String OBJECT_TYPE = "ROLE";
 
-    private ContactType contactType;
-    private String value;
+    private String name;
 
     @Override
     public String getObjectTypeName() {
-        return this.OBJECT_TYPE;
+        return OBJECT_TYPE;
     }
 }

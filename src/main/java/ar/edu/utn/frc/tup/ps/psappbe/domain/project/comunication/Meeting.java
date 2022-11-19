@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Meeting extends CommonFields {
 
+    public static final String OBJECT_TYPE = "MEETING";
+
     private String topic;
     private String description;
     private LocalDateTime meetingDateTime;
@@ -24,4 +26,8 @@ public class Meeting extends CommonFields {
     private Boolean wasMade;
     private MinutesOfMeeting minutesOfMeeting;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

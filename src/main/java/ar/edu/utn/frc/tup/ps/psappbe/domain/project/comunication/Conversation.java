@@ -12,6 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Conversation extends CommonFields {
 
+    public static final String OBJECT_TYPE = "CONVERSATION";
+
     private List<Comment> comments;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

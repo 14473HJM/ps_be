@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Student extends Person {
 
+    public static final String OBJECT_TYPE = "STUDENT";
+
     private Identification universityIdentification;
     private List<Contact> universityContacts;
     private BigDecimal careerAverage;
@@ -21,4 +23,8 @@ public class Student extends Person {
     private String imageProfile;
     private AcademicStatus academicStatus;
     private Grade grade;
-}
+
+    @Override
+    public String getObjectTypeName() {
+        return this.OBJECT_TYPE;
+    }}

@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemComponent extends CommonFields {
 
+    public static final String OBJECT_TYPE = "SYSTEM_COMPONENT";
+
     private String name;
     private String description;
     private PlatformEntity platformEntity;
@@ -22,4 +24,8 @@ public class SystemComponent extends CommonFields {
     private CodeLanguageEntity codeLanguageEntity;
     private CodeFrameworkEntity codeFrameworkEntity;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

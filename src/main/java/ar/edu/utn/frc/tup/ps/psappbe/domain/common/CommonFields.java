@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public abstract class CommonFields {
 
     private Long id;
+    private String objectType;
     private LocalDateTime createdDate;
     private String createdUser;
     private LocalDateTime lastUpdatedDate;
@@ -19,4 +20,6 @@ public abstract class CommonFields {
     private LocalDateTime deletedDate;
     private String deletedUser;
     private String recordStatus;
+
+    public abstract String getObjectTypeName();
 }

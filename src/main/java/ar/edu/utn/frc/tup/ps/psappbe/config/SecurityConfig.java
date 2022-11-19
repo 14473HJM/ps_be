@@ -28,6 +28,11 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -51,20 +56,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 //.csrf(csrrf -> csrrf.ignoringAntMatchers("/h2-console/**"))
-                .csrf().disable()
+                .csrf(csrrf -> csrrf.ignoringAntMatchers("/**"))
+                .cors().disable()
                 .authorizeRequests(
                         auth -> auth
                                 .mvcMatchers("/oauth/login").permitAll()
-                                //.mvcMatchers("/ps/users*").permitAll()
-                                //.anyRequest().authenticated()
+                                //.mvcMatchers("/*").permitAll()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-//                .exceptionHandling(
-//                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-//                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-//                )
+                .exceptionHandling(
+                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                )
                 .build();
     }
 
@@ -83,5 +89,18 @@ public class SecurityConfig {
         JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.addAllowedHeader("Content-Type");
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

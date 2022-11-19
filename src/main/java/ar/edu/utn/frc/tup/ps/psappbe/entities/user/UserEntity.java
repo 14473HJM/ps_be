@@ -9,9 +9,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -27,7 +24,7 @@ public class UserEntity extends CommonFieldsEntity {
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<UserRoleEntity> roles;
+    private List<RoleEntity> roles;
     private Boolean enabled;
     private Boolean accountExpired;
     private Boolean accountLocked;

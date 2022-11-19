@@ -10,9 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectPresentation extends CommonFields {
 
+    public static final String OBJECT_TYPE = "PROJECT_PRESENTATION";
+
     private String presentationVideoLink;
     private String demoVideoLink;
     private Attachment finalDocument;
     private String deliveryLink;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

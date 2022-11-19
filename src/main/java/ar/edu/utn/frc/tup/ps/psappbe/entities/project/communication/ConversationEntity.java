@@ -17,6 +17,8 @@ import java.util.List;
 @Table(name = "conversations")
 public class ConversationEntity extends CommonFieldsEntity {
 
+    private String topic;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "conversation")
     @Fetch(FetchMode.SELECT)
     private List<CommentEntity> comments;

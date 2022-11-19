@@ -11,6 +11,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.entities.common.PlatformNetworkEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DiscriminatorFormula;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -21,9 +22,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "people")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Entity(name = "people")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorFormula("CASE WHEN object_type = 'STUDENT' THEN 'STUDENT' ELSE 'PROFESSOR'")
 public class PersonEntity extends CommonFieldsEntity {
 
     private String name;
@@ -47,5 +48,13 @@ public class PersonEntity extends CommonFieldsEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     @Fetch(FetchMode.SELECT)
     private List<PlatformNetworkEntity> socialNetworksEntity;
+
+    @OneToOne
+    @JoinColumn(name = "university_identification_id")
+    private IdentificationEntity universityIdentification;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @Fetch(FetchMode.SELECT)
+    private List<ContactEntity> universityContacts;
 
 }

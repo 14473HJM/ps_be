@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CodeFramework extends CommonFields {
 
-    public static final String TYPE = "CODE_FRAMEWORK";
+    public static final String OBJECT_TYPE = "CODE_FRAMEWORK";
 
     /**
      * SPRING BOOT, REACT, ANGULAR, REACT NATIVE
@@ -20,4 +20,9 @@ public class CodeFramework extends CommonFields {
     private String description;
     private String imageLink;
     private String iconLink;
+
+    @Override
+    public String getObjectTypeName() {
+        return this.OBJECT_TYPE;
+    }
 }
