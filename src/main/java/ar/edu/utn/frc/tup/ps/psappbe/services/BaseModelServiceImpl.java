@@ -123,4 +123,14 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
         }
         return entity;
     }
+
+    protected List<M> mapList(List<E> entityList) {
+        return entityList.stream()
+                .map(entity -> getModelMapper().map(entity, modelClass))
+                .collect(Collectors.toList());
+    }
+
+    protected M map(E entity) {
+        return getModelMapper().map(entity, modelClass);
+    }
 }
