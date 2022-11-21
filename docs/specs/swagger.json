@@ -1,0 +1,1 @@
+{"openapi":"3.0.1","info":{"title":"'ps-app-be'","description":"'Backend to support the PS web Site'","contact":{"name":"Hernán Jesús Morais","email":"104473@tecnicatura.frc.utn.edu.ar"},"version":"'0.0.1-SNAPSHOT'"},"servers":[{"url":"http://localhost:8080","description":"'Backend to support the PS web Site'"}],"paths":{},"components":{}}
