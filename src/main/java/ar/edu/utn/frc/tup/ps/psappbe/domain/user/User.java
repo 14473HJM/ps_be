@@ -2,6 +2,8 @@ package ar.edu.utn.frc.tup.ps.psappbe.domain.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Person;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,15 +19,23 @@ public class User extends CommonFields {
     public static final String OBJECT_TYPE = "USER";
 
     private String userName;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Person person;
     private List<Role> roles;
-    private Boolean enabled;
-    private Boolean accountExpired;
-    private Boolean accountLocked;
-    private LocalDate passwordExpirationDate;
-    private Boolean credentialExpired;
     private String avatar;
+
+    @JsonIgnore
+    private Boolean enabled;
+    @JsonIgnore
+    private Boolean accountExpired;
+    @JsonIgnore
+    private Boolean accountLocked;
+    @JsonIgnore
+    private LocalDate passwordExpirationDate;
+    @JsonIgnore
+    private Boolean credentialExpired;
 
     @Override
     public String getObjectTypeName() {

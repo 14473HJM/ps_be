@@ -18,7 +18,6 @@ public class StudentEntity extends PersonEntity {
 
     private BigDecimal careerAverage;
     private LocalDate careerRegistrationDate;
-    private String imageProfile;
 
     @Enumerated(EnumType.STRING)
     private AcademicStatus academicStatus;

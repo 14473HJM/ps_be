@@ -5,17 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Role extends CommonFields {
 
-    public static final String OBJECT_TYPE = "ROLE";
+public enum Role{
 
-    private String name;
-
-    @Override
-    public String getObjectTypeName() {
-        return OBJECT_TYPE;
-    }
+    ADMIN, STUDENT, PROFESSOR;
 }

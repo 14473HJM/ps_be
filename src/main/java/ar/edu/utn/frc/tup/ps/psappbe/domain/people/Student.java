@@ -1,6 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.domain.people;
 
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonTypeName("student")
 public class Student extends Person {
 
     public static final String OBJECT_TYPE = "STUDENT";
@@ -20,7 +22,6 @@ public class Student extends Person {
     private List<Contact> universityContacts;
     private BigDecimal careerAverage;
     private LocalDate careerRegistrationDate;
-    private String imageProfile;
     private AcademicStatus academicStatus;
     private Grade grade;
 

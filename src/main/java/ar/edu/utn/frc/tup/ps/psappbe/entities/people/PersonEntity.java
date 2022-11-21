@@ -57,4 +57,5 @@ public class PersonEntity extends CommonFieldsEntity {
     @Fetch(FetchMode.SELECT)
     private List<ContactEntity> universityContacts;
 
+    private String imageProfile;
 }

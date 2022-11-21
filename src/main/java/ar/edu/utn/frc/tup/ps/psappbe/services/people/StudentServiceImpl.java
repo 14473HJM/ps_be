@@ -37,7 +37,6 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
 
     @Override
     public Student create(Student student) {
-        student.setObjectType(Student.OBJECT_TYPE);
         Identification personIdentification = identificationService.create(student.getPersonIdentification());
         Identification universityIdentification = identificationService.create(student.getUniversityIdentification());
         student.setPersonIdentification(personIdentification);

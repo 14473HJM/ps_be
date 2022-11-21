@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,8 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
+
+    private final PasswordEncoder passwordEncoder;
     @Override
     protected JpaRepository getJpaRepository() {
         return userRepository;
@@ -41,5 +44,11 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
         } else {
             return null;
         }
+    }
+
+    @Override
+    public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return super.create(user);
     }
 }

@@ -12,32 +12,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ps")
+@RequestMapping("/ps/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Slf4j
 public class UserController {
 
     private final UserService userService;
 
-    private final AddressService addressService;
-
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.getAll();
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("users/{id}/address")
-    public ResponseEntity<Address> postUserAddress(@PathVariable Long id,
-                                                   @RequestBody Address address) {
-        Address savedAddress = addressService.create(address);
-
-        return ResponseEntity.created(null).body(savedAddress);
+    @PostMapping()
+    public ResponseEntity<User> postUserAddress(@RequestBody User user) {
+        user = userService.create(user);
+        return ResponseEntity.created(null).body(user);
     }
 }
