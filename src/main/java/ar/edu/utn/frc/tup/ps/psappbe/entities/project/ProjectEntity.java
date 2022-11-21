@@ -1,7 +1,6 @@
 package ar.edu.utn.frc.tup.ps.psappbe.entities.project;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.*;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.ProfessorEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.StudentEntity;
@@ -26,6 +25,14 @@ public class ProjectEntity extends CommonFieldsEntity {
 
     private String name;
     private String description;
+    @Column(columnDefinition="TEXT")
+    private String objective;
+    @Column(columnDefinition="TEXT")
+    private String limit;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+    @Fetch(FetchMode.SELECT)
+    private List<ProjectScopeEntity> scopes;
 
     @Enumerated(EnumType.STRING)
     private ProjectType projectType;

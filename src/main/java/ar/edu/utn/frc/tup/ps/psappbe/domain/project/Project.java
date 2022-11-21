@@ -22,6 +22,9 @@ public class Project extends CommonFields {
 
     private String name; //MVP
     private String description; //MVP
+    private String objective;
+    private String limit;
+    private List<ProjectScope> scopes;
     private ProjectType projectType; //MVP
     private ProjectStatus projectStatus; //MVP
     private LocalDate endDate; //MVP
