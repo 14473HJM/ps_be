@@ -40,6 +40,7 @@ public class Person extends CommonFields {
     private List<PlatformNetwork> socialNetworks;
     private List<Contact> universityContacts;
     private String imageProfile;
+    private Identification universityIdentification;
 
     @Override
     public String getObjectTypeName() {

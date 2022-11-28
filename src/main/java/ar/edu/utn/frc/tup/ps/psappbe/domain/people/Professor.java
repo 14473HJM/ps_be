@@ -11,11 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonTypeName("professor")
-public class Professor {
+public class Professor extends Person {
 
     public static final String OBJECT_TYPE = "PROFESSOR";
 
-    private Identification universityIdentification;
-    private List<Contact> universityContacts;
     private String universityProfile;
 }
