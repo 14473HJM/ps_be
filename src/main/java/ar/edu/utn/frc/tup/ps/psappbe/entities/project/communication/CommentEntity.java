@@ -19,5 +19,6 @@ public class CommentEntity extends CommonFieldsEntity {
     @JoinColumn(name = "commentator_id")
     private PersonEntity commentator;
 
+    @Column(columnDefinition="TEXT")
     private String comment;
 }

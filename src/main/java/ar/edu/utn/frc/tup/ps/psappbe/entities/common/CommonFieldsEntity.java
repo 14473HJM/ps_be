@@ -3,7 +3,6 @@ package ar.edu.utn.frc.tup.ps.psappbe.entities.common;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import java.time.LocalDateTime;
-
-import static javax.persistence.GenerationType.AUTO;
 
 @Data
 @AllArgsConstructor

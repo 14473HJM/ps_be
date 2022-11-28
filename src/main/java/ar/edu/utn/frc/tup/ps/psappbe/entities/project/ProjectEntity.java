@@ -28,7 +28,7 @@ public class ProjectEntity extends CommonFieldsEntity {
     @Column(columnDefinition="TEXT")
     private String objective;
     @Column(columnDefinition="TEXT")
-    private String limit;
+    private String projectLimit;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
     @Fetch(FetchMode.SELECT)
@@ -56,9 +56,12 @@ public class ProjectEntity extends CommonFieldsEntity {
     @Fetch(FetchMode.SELECT)
     private List<SystemComponentEntity> systemComponents;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private StudentEntity student;
+    @ManyToMany
+    @JoinTable(
+            name = "project_students",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<StudentEntity> students;
     @ManyToOne
     @JoinColumn(name = "tutor_id")
     private ProfessorEntity tutor;
@@ -82,8 +85,8 @@ public class ProjectEntity extends CommonFieldsEntity {
     private List<MeetingEntity> meetingsEntity;
 
     @OneToOne
-    @JoinColumn(name = "conversation_id")
-    private ConversationEntity conversationEntity;
+    @JoinColumn(name = "conversationId", referencedColumnName = "id")
+    private ConversationEntity conversation;
 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")

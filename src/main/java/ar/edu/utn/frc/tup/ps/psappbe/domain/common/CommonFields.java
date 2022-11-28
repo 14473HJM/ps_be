@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class CommonFields {
-
+    
     private Long id;
     private String objectType;
     private LocalDateTime createdDate;
