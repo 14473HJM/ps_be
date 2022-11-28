@@ -32,5 +32,4 @@ public class ProjectController {
         project = projectService.create(project);
         return ResponseEntity.created(null).body(project);
     }
-
 }

@@ -1,6 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.project;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectScope;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     private final CommentService commentService;
 
+    private final ProjectScopeService projectScopeService;
+
     private final ModelMapper modelMapper;
     @Override
     protected JpaRepository getJpaRepository() {
@@ -45,12 +50,23 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     @Override
     public Project create(Project project) {
+        // Set status in CREATED
         project.setProjectStatus(ProjectStatus.CREATED);
+        // Create project conversation
         this.createProjectConversation(project);
-
-
+        // Create the project
         project = super.create(project);
+        // Create tha project scopes
+        this.createProjectScopes(project);
+        project = getById(project.getId());
         return project;
+    }
+
+    private void createProjectScopes(Project project) {
+        Long projectId = project.getId();
+        project.getScopes().forEach((projectScope) ->
+            projectScope.setProjectId(projectId));
+        projectScopeService.createAll(project.getScopes());
     }
 
     private void createProjectConversation(Project project) {

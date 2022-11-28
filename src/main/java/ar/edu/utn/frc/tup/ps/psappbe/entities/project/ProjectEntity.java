@@ -30,7 +30,7 @@ public class ProjectEntity extends CommonFieldsEntity {
     @Column(columnDefinition="TEXT")
     private String projectLimit;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projectId")
     @Fetch(FetchMode.SELECT)
     private List<ProjectScopeEntity> scopes;
 

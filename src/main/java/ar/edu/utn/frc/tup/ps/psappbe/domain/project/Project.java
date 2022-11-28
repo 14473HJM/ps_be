@@ -28,7 +28,7 @@ public class Project extends CommonFields {
     public static final String OBJECT_TYPE = "PROJECT";
 
     @NotBlank(message = "El nombre del proyecto debe tener al menos 1 caracter distinto de espacios en blanco.")
-    @Size(min = 10, max = 100, message = "El tema del proyecto debe tener entre 10 y 100 caracteres.")
+    @Size(min = 3, max = 100, message = "El tema del proyecto debe tener entre 10 y 100 caracteres.")
     private String name; //MVP
 
     @NotBlank(message = "La descripción del proyecto debe tener al menos 1 caracter distinto de espacios en blanco.")
@@ -43,7 +43,7 @@ public class Project extends CommonFields {
 
     @Valid
     @NotEmpty(message = "La lista de alcances no puede estar vacia.")
-    private List<ProjectScope> scopes;
+    private List<@Valid ProjectScope> scopes;
 
     @NotNull(message = "El tipo de proyecto es un campo requerido.")
     private ProjectType projectType; //MVP

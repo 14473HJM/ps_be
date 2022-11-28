@@ -17,8 +17,7 @@ import javax.persistence.Table;
 @Table(name = "project_scopes")
 public class ProjectScopeEntity extends CommonFieldsEntity {
 
-    @ManyToOne
     @JoinColumn(name = "project_id")
-    private ProjectEntity project;
+    private Long projectId;
     private String scope;
 }

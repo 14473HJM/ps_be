@@ -74,7 +74,7 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
 
     @Override
     public List<M> createAll(List<M> modelList) {
-        String objectType = modelList.get(0).getObjectType();
+        String objectType = modelList.get(0).getObjectTypeName();
         List<E> entityList = modelList.stream()
                 .map(model -> getModelMapper().map(model, entityClass))
                 .collect(Collectors.toList()).stream()
