@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 public class Comment extends CommonFields {
 
     public static final String OBJECT_TYPE = "COMMENT";
-    private Conversation conversation;
+
+    private Long conversationId;
     private Person commentator;
     private String comment;
 

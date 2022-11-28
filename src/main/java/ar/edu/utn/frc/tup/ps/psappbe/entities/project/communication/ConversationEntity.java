@@ -19,7 +19,7 @@ public class ConversationEntity extends CommonFieldsEntity {
 
     private String topic;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "conversation")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "conversationId")
     @Fetch(FetchMode.SELECT)
     private List<CommentEntity> comments;
 

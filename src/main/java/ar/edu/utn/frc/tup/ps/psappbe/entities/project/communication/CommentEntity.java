@@ -4,6 +4,8 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Person;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.PersonEntity;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
@@ -11,9 +13,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comments")
 public class CommentEntity extends CommonFieldsEntity {
-    @ManyToOne
+
     @JoinColumn(name = "conversation_id")
-    private ConversationEntity conversation;
+    private Long conversationId;
 
     @ManyToOne
     @JoinColumn(name = "commentator_id")

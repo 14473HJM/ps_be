@@ -25,7 +25,4 @@ public class Student extends Person {
     private AcademicStatus academicStatus;
     private Grade grade;
 
-    @Override
-    public String getObjectTypeName() {
-        return this.OBJECT_TYPE;
-    }}
+}

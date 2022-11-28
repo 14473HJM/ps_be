@@ -56,7 +56,8 @@ public class ProjectEntity extends CommonFieldsEntity {
     @Fetch(FetchMode.SELECT)
     private List<SystemComponentEntity> systemComponents;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     @JoinTable(
             name = "project_students",
             joinColumns = @JoinColumn(name = "project_id"),
@@ -64,9 +65,11 @@ public class ProjectEntity extends CommonFieldsEntity {
     private List<StudentEntity> students;
     @ManyToOne
     @JoinColumn(name = "tutor_id")
+    @Fetch(FetchMode.SELECT)
     private ProfessorEntity tutor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     @JoinTable(
             name = "project_observers",
             joinColumns = @JoinColumn(name = "project_id"),

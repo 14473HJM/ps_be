@@ -57,7 +57,7 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         Conversation conversation = new Conversation();
         conversation.setTopic("Conversación del proyecto " + project.getName());
         conversation = conversationService.create(conversation);
-        Comment initialComment = new Comment(conversation, null, INITIAL_PROJECT_COMMENT);
+        Comment initialComment = new Comment(conversation.getId(), null, INITIAL_PROJECT_COMMENT);
         initialComment = commentService.create(initialComment);
         conversation.setComments(Arrays.asList(initialComment));
         project.setConversation(conversation);

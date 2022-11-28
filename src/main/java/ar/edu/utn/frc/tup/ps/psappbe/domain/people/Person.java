@@ -28,6 +28,7 @@ public class Person extends CommonFields {
 
     public static final String OBJECT_TYPE = "PERSON";
 
+    private String role;
     private String name;
     private String lastName;
     private Identification personIdentification;

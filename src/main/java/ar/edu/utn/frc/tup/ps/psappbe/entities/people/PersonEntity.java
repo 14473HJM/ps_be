@@ -24,9 +24,12 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "people")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorFormula("CASE WHEN object_type = 'STUDENT' THEN 'STUDENT' ELSE 'PROFESSOR'")
+@DiscriminatorColumn(name="role",
+        discriminatorType = DiscriminatorType.STRING)
 public class PersonEntity extends CommonFieldsEntity {
 
+    @Column(insertable = false, updatable = false)
+    private String role;
     private String name;
     private String lastName;
     @OneToOne
@@ -58,4 +61,5 @@ public class PersonEntity extends CommonFieldsEntity {
     private List<ContactEntity> universityContacts;
 
     private String imageProfile;
+
 }

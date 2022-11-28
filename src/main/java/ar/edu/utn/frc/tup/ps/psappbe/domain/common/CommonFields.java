@@ -1,5 +1,6 @@
 package ar.edu.utn.frc.tup.ps.psappbe.domain.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,6 @@ public abstract class CommonFields {
     private String deletedUser;
     private String recordStatus;
 
+    @JsonIgnore
     public abstract String getObjectTypeName();
 }
