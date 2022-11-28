@@ -3,14 +3,18 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 import ar.edu.utn.frc.tup.ps.psappbe.dtos.ErrorApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ConstraintViolationException;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -21,9 +25,20 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class})
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorApi> handleError(MethodArgumentTypeMismatchException exception) {
         ErrorApi error = buildError(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorApi> handleError(MethodArgumentNotValidException exception) {
+        AtomicReference<String> message = new AtomicReference<>("");
+        exception.getBindingResult().getAllErrors().forEach((error) -> {
+            String errorMessage = error.getDefaultMessage();
+            message.set(message + errorMessage + " | ");
+        });
+        ErrorApi error = buildError(message.get().substring(0, message.get().length() - 3), HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
