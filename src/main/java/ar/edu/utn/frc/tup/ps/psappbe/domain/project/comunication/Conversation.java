@@ -14,6 +14,7 @@ public class Conversation extends CommonFields {
 
     public static final String OBJECT_TYPE = "CONVERSATION";
 
+    private String topic;
     private List<Comment> comments;
 
     @Override
