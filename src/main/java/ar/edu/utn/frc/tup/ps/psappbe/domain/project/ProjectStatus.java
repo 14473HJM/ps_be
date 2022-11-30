@@ -9,5 +9,6 @@ public enum ProjectStatus {
     UNDER_FINAL_REVIEW,
     READY_TO_DELIVER,
     DELIVERED,
-    FINISHED;
+    FINISHED,
+    CANCELED;
 }

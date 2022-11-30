@@ -4,8 +4,11 @@ package ar.edu.utn.frc.tup.ps.psappbe.domain.project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Professor;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Student;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.cohort.Cohort;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Meeting;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.Issue;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.IssueTracker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,6 +51,7 @@ public class Project extends CommonFields {
     @NotNull(message = "El tipo de proyecto es un campo requerido.")
     private ProjectType projectType; //MVP
     private ProjectStatus projectStatus; //MVP
+    private Cohort cohort;
     private LocalDate endDate; //MVP
 
     @Size(min = 10, max = 100, message = "El tema del proyecto debe tener entre 10 y 100 caracteres.")
@@ -65,7 +69,6 @@ public class Project extends CommonFields {
     private Professor tutor; //MVP
     private List<Professor> observers; //NO MVP
     private List<Valuation> valuations; //MVP
-    private AcademicCondition academicCondition; //MVP
 
     private List<Meeting> meetings; //NO MVP
     private Conversation conversation; //MVP

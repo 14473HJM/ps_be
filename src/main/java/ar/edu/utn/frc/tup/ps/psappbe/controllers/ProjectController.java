@@ -2,6 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/ps")
 @RequiredArgsConstructor
@@ -23,13 +25,32 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/projects")
-    public ResponseEntity<List<Project>> getAll() {
+    public ResponseEntity<List<Project>> getAll(@RequestParam(required = false) Long userId) {
+        if(userId != null) {
+            return ResponseEntity.ok(projectService.getProjectsByUserId(userId));
+        }
         return ResponseEntity.ok(projectService.getAll());
+    }
+
+    @GetMapping("/projects/{id}")
+    public ResponseEntity<Project> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.getById(id));
     }
 
     @PostMapping("/projects")
     public ResponseEntity<Project> postProject(@Valid @RequestBody Project project) {
         project = projectService.create(project);
         return ResponseEntity.created(null).body(project);
+    }
+
+    @PostMapping("/projects/{id}/conversation/comments")
+    public ResponseEntity<Comment> publishProjectComment(@PathVariable Long id, @RequestBody Comment comment) {
+        comment = projectService.publishProjectComment(id, comment);
+        return ResponseEntity.created(null).body(comment);
+    }
+
+    @PutMapping("/projects/{id}/status/{status}")
+    public ResponseEntity<Project> changeStatus(@RequestBody Project project) {
+        return null;
     }
 }

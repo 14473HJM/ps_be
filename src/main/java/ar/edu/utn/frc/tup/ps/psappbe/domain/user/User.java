@@ -23,6 +23,7 @@ public class User extends CommonFields {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Person person;
+
     private List<Role> roles;
     private String avatar;
 

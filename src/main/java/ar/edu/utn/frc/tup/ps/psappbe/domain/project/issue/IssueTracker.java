@@ -1,4 +1,4 @@
-package ar.edu.utn.frc.tup.ps.psappbe.domain.project;
+package ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.InternetPlatform;

@@ -16,4 +16,9 @@ public class Professor extends Person {
     public static final String OBJECT_TYPE = "PROFESSOR";
 
     private String universityProfile;
+
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

@@ -23,6 +23,9 @@ public class Student extends Person {
     private BigDecimal careerAverage;
     private LocalDate careerRegistrationDate;
     private AcademicStatus academicStatus;
-    private Grade grade;
 
+    @Override
+    public String getObjectTypeName() {
+        return OBJECT_TYPE;
+    }
 }

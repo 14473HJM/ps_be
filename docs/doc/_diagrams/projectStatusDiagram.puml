@@ -1,0 +1,30 @@
+@startuml
+
+[*] --> CREATED
+CREATED --> UNDER_PROP_REVIEW : Enviada
+UNDER_PROP_REVIEW -[#green]-> PROP_ACCEPTED : Aceptada
+UNDER_PROP_REVIEW -[#red]-> CREATED : Rechazada
+PROP_ACCEPTED --> WIP : Herramientas cargadas
+WIP --> UNDER_FINAL_REVIEW : Enviada
+UNDER_FINAL_REVIEW -[#green]-> READY_TO_DELIVER : Aceptada
+UNDER_FINAL_REVIEW -[#red]-> WIP : Rechazada
+READY_TO_DELIVER --> DELIVERED: Entregado
+DELIVERED --> FINISHED : Rendido
+FINISHED --> [*]
+
+ALL --> CANCELED : Cancelado
+CANCELED --> [*]
+
+CREATED: Cuando el proyecto se crea
+CREATED : El proyecto en este estado \naun es una propuesta
+UNDER_PROP_REVIEW: Pendiente de aprobación \nde la propuesta
+PROP_ACCEPTED: La propuesta fue aceptada
+PROP_ACCEPTED: Se deben cargar las herramientas \nde seguimiento y repositorios \npara avanzar
+WIP: Estado mientras se construye el sistema
+UNDER_FINAL_REVIEW: Pendiente de aprobación para \npresentar la PS
+READY_TO_DELIVER: Listo para cargar los documentos finales \nde presentación de la PS (videos, doc. etc.)
+DELIVERED: Ya todo fue entregado y \nqueda solo la mesa de examen
+FINISHED: Cuando se hizo la mesa de examen.
+ALL: Representa todos los estados
+CANCELED: Se cancela el proyecto y ya no \npuede volverse a presentar este \nproyecto.
+@enduml

@@ -22,7 +22,4 @@ public class StudentEntity extends PersonEntity {
     @Enumerated(EnumType.STRING)
     private AcademicStatus academicStatus;
 
-    @OneToOne
-    @JoinColumn(name = "grade_id")
-    private GradeEntity gradeE;
 }

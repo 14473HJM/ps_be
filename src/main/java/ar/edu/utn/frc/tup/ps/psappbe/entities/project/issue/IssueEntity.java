@@ -1,10 +1,9 @@
-package ar.edu.utn.frc.tup.ps.psappbe.entities.project;
+package ar.edu.utn.frc.tup.ps.psappbe.entities.project.issue;
 
-import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Person;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.IssueStatus;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.IssueStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.PersonEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.communication.ConversationEntity;
 import lombok.Data;
 

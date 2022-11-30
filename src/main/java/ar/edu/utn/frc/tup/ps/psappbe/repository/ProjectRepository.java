@@ -2,6 +2,14 @@ package ar.edu.utn.frc.tup.ps.psappbe.repository;
 
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
+
+    @Query("SELECT P " +
+            "FROM ProjectEntity P JOIN P.students PS " +
+            "WHERE PS.id = :studentId")
+    List<ProjectEntity> getAllProjectsByStudentId(Long studentId);
 }

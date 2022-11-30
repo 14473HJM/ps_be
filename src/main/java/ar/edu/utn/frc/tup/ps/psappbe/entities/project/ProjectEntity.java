@@ -1,11 +1,15 @@
 package ar.edu.utn.frc.tup.ps.psappbe.entities.project;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.*;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.cohort.Cohort;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.ProfessorEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.StudentEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.project.cohort.CohortEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.communication.ConversationEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.communication.MeetingEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.project.issue.IssueEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.project.issue.IssueTrackerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +43,10 @@ public class ProjectEntity extends CommonFieldsEntity {
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+
+    @OneToOne
+    @JoinColumn(name = "cohort_id")
+    private CohortEntity cohort;
     private LocalDate endDate;
     private String projectTheme;
     private Boolean isRealProject;
@@ -79,9 +87,6 @@ public class ProjectEntity extends CommonFieldsEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
     @Fetch(FetchMode.SELECT)
     private List<ValuationEntity> valuationsEntity;
-
-    @Enumerated(EnumType.STRING)
-    private AcademicCondition academicCondition;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
     @Fetch(FetchMode.SELECT)

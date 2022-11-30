@@ -1,4 +1,4 @@
-package ar.edu.utn.frc.tup.ps.psappbe.entities.project;
+package ar.edu.utn.frc.tup.ps.psappbe.entities.project.issue;
 
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import lombok.Data;
