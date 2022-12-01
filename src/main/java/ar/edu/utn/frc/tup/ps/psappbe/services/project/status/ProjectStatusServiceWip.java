@@ -2,6 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.services.project.status;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.ProfessorService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.StudentService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.CommentService;
@@ -16,9 +17,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseService implements ProjectStatusService {
+public class ProjectStatusServiceWip extends ProjectStatusBaseService implements ProjectStatusService{
 
-    public ProjectStatusServiceUnderPropReview(@Autowired CommentService commentService,
+    public ProjectStatusServiceWip(@Autowired CommentService commentService,
                                    @Autowired ProfessorService professorService,
                                    @Autowired UserService userService,
                                    @Autowired StudentService studentService) {
@@ -27,17 +28,17 @@ public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseServic
 
     @Override
     ProjectStatus previous() {
-        return ProjectStatus.CREATED;
+        return ProjectStatus.PROP_ACCEPTED;
     }
 
     @Override
     ProjectStatus current() {
-        return ProjectStatus.UNDER_PROP_REVIEW;
+        return ProjectStatus.WIP;
     }
 
     @Override
     ProjectStatus next() {
-        return ProjectStatus.PROP_ACCEPTED;
+        return ProjectStatus.UNDER_FINAL_REVIEW;
     }
 
     @Override
@@ -53,5 +54,12 @@ public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseServic
     @Override
     void validateCancel(Project project) {
 
+    }
+
+    @Override
+    public Project moveBack(Project project, Comment comment) {
+        throw new IllegalArgumentException("Transición no permitida. Cuando la propuesta fue aceptada " +
+                "ya no puede volver a los estados previos. Si necesita hacer una modificación, debe gestionarse con " +
+                "el tutor de la PS o un Usuario administrador.");
     }
 }

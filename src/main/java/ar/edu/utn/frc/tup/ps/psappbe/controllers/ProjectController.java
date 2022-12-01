@@ -2,6 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.ProjectService;
@@ -49,8 +50,11 @@ public class ProjectController {
         return ResponseEntity.created(null).body(comment);
     }
 
-    @PutMapping("/projects/{id}/status/{status}")
-    public ResponseEntity<Project> changeStatus(@RequestBody Project project) {
-        return null;
+    @PutMapping("/projects/{id}/status")
+    public ResponseEntity<Project> changeStatus(@PathVariable Long id,
+                                                @RequestBody Comment comment,
+                                                @RequestParam ProjectStatusAction action) {
+        Project project = projectService.changeProjectStatus(id, comment, action);
+        return ResponseEntity.created(null).body(project);
     }
 }

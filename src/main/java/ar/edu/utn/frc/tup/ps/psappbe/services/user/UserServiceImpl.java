@@ -1,5 +1,6 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRepository;
@@ -44,6 +45,11 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Boolean isAdmin(User user) {
+        return user.getRoles().stream().anyMatch((role) -> role == Role.ADMIN);
     }
 
     @Override

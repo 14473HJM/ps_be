@@ -5,9 +5,11 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.common.PlatformNetwork;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Contact;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Identification;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.PersonStatus;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.address.AddressEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.PlatformNetworkEntity;
+import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,5 +63,9 @@ public class PersonEntity extends CommonFieldsEntity {
     private List<ContactEntity> universityContacts;
 
     private String imageProfile;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 }

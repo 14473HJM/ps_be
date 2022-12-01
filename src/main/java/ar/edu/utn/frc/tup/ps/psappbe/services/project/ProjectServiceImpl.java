@@ -1,20 +1,27 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.project;
 
+import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Professor;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Student;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectScope;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.ProjectRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
+import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusFactoryService;
+import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -40,6 +47,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     private final CommentService commentService;
 
     private final ProjectScopeService projectScopeService;
+
+    private final ProjectStatusFactoryService projectStatusFactoryService;
 
     private final ModelMapper modelMapper;
     @Override
@@ -76,8 +85,24 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     }
 
     @Override
-    public Project changeProjectStatus(Project project, ProjectStatus projectStatus) {
-        return null;
+    public Project changeProjectStatus(Long projectId, Comment comment, ProjectStatusAction action) {
+        Project initialProject = getById(projectId);
+        Project finalProject;
+        ProjectStatusService projectStatusService = projectStatusFactoryService.getProjectStatusService(initialProject);
+        switch (action) {
+            case MOVE_ON:
+                finalProject = projectStatusService.moveOn(initialProject, comment);
+                break;
+            case MOVE_BACK:
+                finalProject = projectStatusService.moveBack(initialProject, comment);
+                break;
+            case CANCEL:
+                finalProject = projectStatusService.cancel(initialProject, comment);
+                break;
+            default:
+                throw new IllegalArgumentException("La acción requida no es correcta.");
+        }
+        return finalProject;
     }
 
     @Override
@@ -85,6 +110,18 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         User user = userService.getById(userId);
         List<ProjectEntity> projectEntities = projectRepository.getAllProjectsByStudentId(user.getPerson().getId());
         return mapList(projectEntities);
+    }
+
+    @Override
+    public Boolean isOwner(Project project, Student student) {
+        return project.getStudents().stream().anyMatch(
+                (s) -> s.getId() == student.getId()
+        );
+    }
+
+    @Override
+    public Boolean isOwner(Project project, Professor professor) {
+        return project.getTutor().getId() == project.getId();
     }
 
     private void createProjectScopes(Project project) {

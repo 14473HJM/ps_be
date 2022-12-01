@@ -16,9 +16,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseService implements ProjectStatusService {
+public class ProjectStatusServiceUnderFinalReview extends ProjectStatusBaseService implements ProjectStatusService{
 
-    public ProjectStatusServiceUnderPropReview(@Autowired CommentService commentService,
+    public ProjectStatusServiceUnderFinalReview(@Autowired CommentService commentService,
                                    @Autowired ProfessorService professorService,
                                    @Autowired UserService userService,
                                    @Autowired StudentService studentService) {
@@ -27,17 +27,17 @@ public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseServic
 
     @Override
     ProjectStatus previous() {
-        return ProjectStatus.CREATED;
+        return ProjectStatus.WIP;
     }
 
     @Override
     ProjectStatus current() {
-        return ProjectStatus.UNDER_PROP_REVIEW;
+        return ProjectStatus.UNDER_FINAL_REVIEW;
     }
 
     @Override
     ProjectStatus next() {
-        return ProjectStatus.PROP_ACCEPTED;
+        return ProjectStatus.READY_TO_DELIVER;
     }
 
     @Override
@@ -54,4 +54,5 @@ public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseServic
     void validateCancel(Project project) {
 
     }
+
 }

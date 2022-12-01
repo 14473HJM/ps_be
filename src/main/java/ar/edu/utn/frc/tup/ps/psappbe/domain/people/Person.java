@@ -3,6 +3,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.domain.people;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.address.Address;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.PlatformNetwork;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.ContactEntity;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -41,6 +42,7 @@ public class Person extends CommonFields {
     private List<Contact> universityContacts;
     private String imageProfile;
     private Identification universityIdentification;
+    private User user;
 
     @Override
     public String getObjectTypeName() {

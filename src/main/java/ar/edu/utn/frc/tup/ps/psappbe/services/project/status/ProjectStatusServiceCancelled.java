@@ -2,6 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.services.project.status;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.ProfessorService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.StudentService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.CommentService;
@@ -16,28 +17,28 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseService implements ProjectStatusService {
+public class ProjectStatusServiceCancelled extends ProjectStatusBaseService implements ProjectStatusService {
 
-    public ProjectStatusServiceUnderPropReview(@Autowired CommentService commentService,
-                                   @Autowired ProfessorService professorService,
-                                   @Autowired UserService userService,
-                                   @Autowired StudentService studentService) {
+    public ProjectStatusServiceCancelled(@Autowired CommentService commentService,
+                                       @Autowired ProfessorService professorService,
+                                       @Autowired UserService userService,
+                                       @Autowired StudentService studentService) {
         super(commentService, professorService, userService, studentService);
     }
 
     @Override
     ProjectStatus previous() {
-        return ProjectStatus.CREATED;
+        return null;
     }
 
     @Override
     ProjectStatus current() {
-        return ProjectStatus.UNDER_PROP_REVIEW;
+        return ProjectStatus.CANCELED;
     }
 
     @Override
     ProjectStatus next() {
-        return ProjectStatus.PROP_ACCEPTED;
+        return null;
     }
 
     @Override
@@ -53,5 +54,11 @@ public class ProjectStatusServiceUnderPropReview extends ProjectStatusBaseServic
     @Override
     void validateCancel(Project project) {
 
+    }
+
+    @Override
+    public Project moveBack(Project project, Comment comment) {
+        throw new IllegalArgumentException("Transición no permitida desde " + project.getProjectStatus().name()
+                + ". No existe un estado previo.");
     }
 }
