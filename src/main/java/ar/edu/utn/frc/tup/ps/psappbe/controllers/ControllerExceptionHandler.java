@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.UnavailableException;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -29,6 +30,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorApi> handleError(MethodArgumentTypeMismatchException exception) {
         ErrorApi error = buildError(exception.getMessage(), HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(UnavailableException.class)
+    public ResponseEntity<ErrorApi> handleError(UnavailableException exception) {
+        ErrorApi error = buildError("Hubo un error al enviar el mail, pero la invitación pudo crearse.",
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -28,4 +28,5 @@ public class InvitationEntity extends CommonFieldsEntity {
 
     private LocalDateTime usedDate;
     private LocalDateTime dueDateTime;
+    private Integer numberOfDeliveries;
 }

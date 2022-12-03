@@ -5,6 +5,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.user.InvitationStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.user.InvitationEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.InvitationRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
+import ar.edu.utn.frc.tup.ps.psappbe.services.mail.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.UnavailableException;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,8 +30,16 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
 
     private final ModelMapper modelMapper;
 
+    private final EmailService emailService;
+
     @Value("app.front.url")
     private String frontUrl;
+
+    @Value("app.invitation.from")
+    private String invitationFrom;
+
+    @Value("app.invitation.subject")
+    private String invitationSubject;
 
     private static final String FRONT_INVITATION_URL = "/invitation?";
     private static final String FRONT_INVITATION_QUERY_PARAM = "hash=";
@@ -45,16 +55,29 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
     }
 
     @Override
-    public Invitation sendInvitation(String legajo, String email) {
+    public Invitation createInvitation(String legajo, String email) {
         List<Invitation> invitationList = this.getInvitationEntitiesByLegajo(legajo);
         // if invitation not exist
         if(invitationList.isEmpty()) {
-            return createInvitation(legajo, email);
+            Invitation invitation = getInvitationInstance(legajo, email);
+            try {
+                sendInvitation(invitation);
+                invitation.setNumberOfDeliveries(invitation.getNumberOfDeliveries() + 1);
+                this.update(invitation);
+            } catch (UnavailableException e) {
+                log.error("Error al enviar la invitación.", e);
+            }
+            return this.getById(invitation.getId());
         } else {
             // if exist at least one invitation
             for(Invitation invitation : invitationList) {
                 if(invitation.getInvitationStatus() == InvitationStatus.ACTIVE
                 && invitation.getDueDateTime().isAfter(LocalDateTime.now())) {
+                    try {
+                        sendInvitation(invitation);
+                    } catch (UnavailableException e) {
+                        log.error("Error al enviar la invitación.", e);
+                    }
                     return invitation;
                 }
                 if(invitation.getInvitationStatus() == InvitationStatus.ACTIVE
@@ -64,7 +87,13 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
                 }
             }
             // if not ACTIVE invitation
-            return createInvitation(legajo, email);
+            Invitation invitation = getInvitationInstance(legajo, email);
+            try {
+                sendInvitation(invitation);
+            } catch (UnavailableException e) {
+                log.error("Error al enviar la invitación.", e);
+            }
+            return this.getById(invitation.getId());
         }
     }
 
@@ -88,12 +117,28 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
         }
     }
 
+    @Override
+    public void sendInvitation(Invitation invitation) throws UnavailableException {
+        emailService.sendSimpleEmail(invitation.getEmail(), invitationFrom, invitationSubject, invitation.getLink());
+        invitation.setNumberOfDeliveries(invitation.getNumberOfDeliveries() + 1);
+        this.update(invitation);
+    }
+
+    @Override
+    public Invitation resendInvitation(Long invitationId) throws UnavailableException {
+        Invitation invitation = this.getById(invitationId);
+        sendInvitation(invitation);
+        invitation.setNumberOfDeliveries(invitation.getNumberOfDeliveries() + 1);
+        this.update(invitation);
+        return this.getById(invitationId);
+    }
+
     private List<Invitation> getInvitationEntitiesByLegajo(String legajo) {
         List<InvitationEntity> invitationEntityList = invitationRepository.getInvitationEntitiesByLegajo(legajo);
         return mapList(invitationEntityList);
     }
 
-    private Invitation createInvitation(String legajo, String email) {
+    private Invitation getInvitationInstance(String legajo, String email) {
         Invitation invitation = new Invitation();
         invitation.setHash(this.getHash());
         invitation.setLegajo(legajo);
@@ -101,6 +146,7 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
         invitation.setDueDateTime(this.getHashDueDateTime());
         invitation.setEmail(email);
         invitation.setLink(getLink(invitation.getHash()));
+        invitation.setNumberOfDeliveries(0);
         invitation = this.create(invitation);
         return invitation;
     }

@@ -22,6 +22,7 @@ public class Invitation extends CommonFields {
     private InvitationStatus invitationStatus;
     private LocalDateTime usedDate;
     private LocalDateTime dueDateTime;
+    private Integer numberOfDeliveries;
 
     @Override
     public String getObjectTypeName() {

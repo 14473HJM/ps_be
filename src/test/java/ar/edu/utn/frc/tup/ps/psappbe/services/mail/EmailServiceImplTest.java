@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import javax.servlet.UnavailableException;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,7 +38,7 @@ class EmailServiceImplTest {
     }
 
     @Test
-    public void testSendMail() throws IOException {
+    public void testSendMail() throws UnavailableException {
         // Print the labels in the user's account.
         emailService.sendSimpleEmail("hernanjesusmorais@hotmail.com",
                 "ps.tecnicatura@gmail.com",

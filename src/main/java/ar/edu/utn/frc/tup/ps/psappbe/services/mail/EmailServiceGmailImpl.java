@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.UnavailableException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -27,7 +28,7 @@ public class EmailServiceGmailImpl implements EmailService {
     public void sendSimpleEmail(String toEmailAddress,
                                 String fromEmailAddress,
                                 String subject,
-                                String bodyText) {
+                                String bodyText) throws UnavailableException {
         try {
             String user = "me";
             Properties props = new Properties();
@@ -46,9 +47,9 @@ public class EmailServiceGmailImpl implements EmailService {
             message.setRaw(encodedEmail);
             message = gmail.users().messages().send(user, message).execute();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UnavailableException(e.getMessage());
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            throw new UnavailableException(e.getMessage());
         }
     }
 

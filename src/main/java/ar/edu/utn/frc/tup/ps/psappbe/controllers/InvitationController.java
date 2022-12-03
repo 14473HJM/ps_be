@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.UnavailableException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +22,8 @@ public class InvitationController {
     private final InvitationService invitationService;
 
     @PostMapping()
-    public ResponseEntity<Invitation> sendInvitation(@RequestBody InvitationRequest invitationRequest) {
-        Invitation invitation = invitationService.sendInvitation(invitationRequest.getLegajo(), invitationRequest.getEmail());
+    public ResponseEntity<Invitation> createInvitation(@RequestBody InvitationRequest invitationRequest) {
+        Invitation invitation = invitationService.createInvitation(invitationRequest.getLegajo(), invitationRequest.getEmail());
         return ResponseEntity.ok(invitation);
     }
 
@@ -35,6 +36,12 @@ public class InvitationController {
     @GetMapping("/{id}")
     public ResponseEntity<Invitation> getInvitation(@PathVariable Long id) {
         Invitation invitation = invitationService.getById(id);
+        return ResponseEntity.ok(invitation);
+    }
+
+    @PostMapping("/{id}/resend")
+    public ResponseEntity<Invitation> resendInvitation(@PathVariable Long id) throws UnavailableException {
+        Invitation invitation = invitationService.resendInvitation(id);
         return ResponseEntity.ok(invitation);
     }
 
