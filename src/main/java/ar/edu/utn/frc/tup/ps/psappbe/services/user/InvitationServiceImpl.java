@@ -145,7 +145,7 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
         invitation.setInvitationStatus(InvitationStatus.ACTIVE);
         invitation.setDueDateTime(this.getHashDueDateTime());
         invitation.setEmail(email);
-        invitation.setLink(getLink(invitation.getHash()));
+        invitation.setLink(getLink(invitation.getHash(), legajo));
         invitation.setNumberOfDeliveries(0);
         invitation = this.create(invitation);
         return invitation;
@@ -159,7 +159,8 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
         return LocalDateTime.now().plusDays(15);
     }
 
-    private String getLink(String hash) {
-        return frontUrl + FRONT_INVITATION_URL + FRONT_INVITATION_QUERY_PARAM + hash;
+    private String getLink(String hash, String legajo) {
+        return frontUrl + FRONT_INVITATION_URL + FRONT_INVITATION_QUERY_PARAM + hash
+                + "&legajo=" + legajo;
     }
 }
