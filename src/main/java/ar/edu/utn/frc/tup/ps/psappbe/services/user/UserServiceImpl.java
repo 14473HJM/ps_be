@@ -53,6 +53,15 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     }
 
     @Override
+    public void changePassword(String userName, String password) {
+        User user = this.getByUserName(userName);
+        if(user != null) {
+            user.setPassword(passwordEncoder.encode(password));
+            super.update(user);
+        }
+    }
+
+    @Override
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return super.create(user);

@@ -3,6 +3,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.services;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public abstract class BaseModelServiceImpl<M extends CommonFields, E extends CommonFieldsEntity> implements BaseModelService<M, E> {
 
     protected static final String DELETE = "DELETE";
@@ -97,7 +99,12 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
     }
 
     protected E setCommonFields(E entity, String operation, String objectType) {
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        String user = "anonymousUser";
+        try{
+            user = SecurityContextHolder.getContext().getAuthentication().getName();
+        } catch(Exception e) {
+            log.warn("Error al obtener el nombre de usuario del contexto.", e);
+        }
         LocalDateTime operationDateTime = LocalDateTime.now();
         switch (operation) {
             case INSERT:
