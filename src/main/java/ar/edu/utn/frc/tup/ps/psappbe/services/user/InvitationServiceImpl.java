@@ -32,13 +32,13 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
 
     private final EmailService emailService;
 
-    @Value("app.front.url")
+    @Value("${app.front.url}")
     private String frontUrl;
 
-    @Value("app.invitation.from")
+    @Value("${app.invitation.from}")
     private String invitationFrom;
 
-    @Value("app.invitation.subject")
+    @Value("${app.invitation.subject}")
     private String invitationSubject;
 
     private static final String FRONT_INVITATION_URL = "/invitation?";

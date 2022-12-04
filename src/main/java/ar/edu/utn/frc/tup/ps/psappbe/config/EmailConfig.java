@@ -32,7 +32,7 @@ public class EmailConfig {
     /**
      * Application name.
      */
-    private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
+    private static final String APPLICATION_NAME = "PS Admin";
     /**
      * Global instance of the JSON factory.
      */
@@ -86,17 +86,5 @@ public class EmailConfig {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
         return service;
-//        // Print the labels in the user's account.
-//        String user = "me";
-//        ListLabelsResponse listResponse = service.users().labels().list(user).execute();
-//        List<Label> labels = listResponse.getLabels();
-//        if (labels.isEmpty()) {
-//            System.out.println("No labels found.");
-//        } else {
-//            System.out.println("Labels:");
-//            for (Label label : labels) {
-//                System.out.printf("- %s\n", label.getName());
-//            }
-//        }
     }
 }

@@ -37,8 +37,8 @@ public class EmailServiceGmailImpl implements EmailService {
             email.setFrom(new InternetAddress(fromEmailAddress));
             email.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(toEmailAddress));
-            email.setSubject(subject);
-            email.setText(bodyText);
+            email.setSubject(subject, "UTF-8");
+            email.setText(bodyText, "UTF-8");
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             email.writeTo(buffer);
             byte[] bytes = buffer.toByteArray();
