@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/ps/invitations")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @Slf4j
 public class InvitationController {
 
