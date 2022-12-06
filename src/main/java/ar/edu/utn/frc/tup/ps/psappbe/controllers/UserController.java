@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> postUserAddress(@RequestBody User user) {
+    public ResponseEntity<User> postUser(@RequestBody User user) {
         user = userService.create(user);
         return ResponseEntity.created(null).body(user);
     }
