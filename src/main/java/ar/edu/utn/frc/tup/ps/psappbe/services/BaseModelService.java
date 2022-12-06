@@ -14,4 +14,5 @@ public interface BaseModelService<M, E> {
 
     M update(M model);
 
+    void delete(M model);
 }

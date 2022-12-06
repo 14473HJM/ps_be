@@ -98,6 +98,14 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
         return getModelMapper().map(entity, modelClass);
     }
 
+    @Override
+    public void delete(M model) {
+        E entity = setCommonFields(
+                getModelMapper().map(model, entityClass), DELETE, model.getObjectTypeName()
+        );
+        getJpaRepository().save(entity);
+    }
+
     protected E setCommonFields(E entity, String operation, String objectType) {
         String user = "anonymousUser";
         try{
@@ -120,7 +128,7 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
                 break;
             case DELETE:
                 entity.setDeletedUser(user);
-                entity.setLastUpdatedDate(operationDateTime);
+                entity.setDeletedDate(operationDateTime);
                 entity.setLastUpdatedUser(user);
                 entity.setLastUpdatedDate(operationDateTime);
                 entity.setRecordStatus(DELETED_STATUS);

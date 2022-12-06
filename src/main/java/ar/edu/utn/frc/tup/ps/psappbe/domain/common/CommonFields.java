@@ -24,4 +24,9 @@ public abstract class CommonFields {
 
     @JsonIgnore
     public abstract String getObjectTypeName();
+
+    @JsonIgnore
+    public Boolean isDeleted() {
+        return this.getRecordStatus() == "DELETED";
+    }
 }
