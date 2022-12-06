@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "platform_networks")
 public class PlatformNetworkEntity extends CommonFieldsEntity{
-    @ManyToOne
+
     @JoinColumn(name = "person_id")
-    private PersonEntity person;
+    private Long personId;
 
     @ManyToOne
     @JoinColumn(name = "internet_platform_id")

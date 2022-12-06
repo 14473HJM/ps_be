@@ -5,8 +5,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.PlatformNetwork;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.ContactEntity;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,9 @@ import java.util.List;
         @JsonSubTypes.Type(value = Student.class, name = "STUDENT"),
         @JsonSubTypes.Type(value = Professor.class, name = "PROFESSOR")
 })
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Person extends CommonFields {
 
     public static final String OBJECT_TYPE = "PERSON";
@@ -37,8 +39,11 @@ public class Person extends CommonFields {
     private LocalDate birthday;
     private Integer age;
     private PersonStatus status;
+    @JsonManagedReference
     private List<Contact> personalContacts;
+    @JsonManagedReference
     private List<PlatformNetwork> socialNetworks;
+    @JsonManagedReference
     private List<Contact> universityContacts;
     private String imageProfile;
     private Identification universityIdentification;

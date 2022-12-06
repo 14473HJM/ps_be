@@ -1,24 +1,25 @@
 package ar.edu.utn.frc.tup.ps.psappbe.domain.common;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @AllArgsConstructor
-public enum InternetPlatform {
+@NoArgsConstructor
+public class InternetPlatform extends CommonFields {
 
-    LINKEDIN("", "", true, false),
-    FACEBOOK("", "", true, false),
-    INSTAGRAM("", "", true, false),
-    TWITTER("", "", true, false),
-    YOUTUBE("", "", true, false),
-    GITHUB("", "", false, true),
-    GITLAB("", "", false, true),
-    BITBUCKET("", "", false, true),
-    JIRA("", "", false, false);
+    public static final String OBJECT_TYPE = "INTERNET_PLATFORM";
 
+    private String name;
     private String baseUrl;
     private String icon;
     private Boolean isSocialNetwork;
     private Boolean isGitPlatform;
+
+    @Override
+    public String getObjectTypeName() {
+        return this.OBJECT_TYPE;
+    }
 }

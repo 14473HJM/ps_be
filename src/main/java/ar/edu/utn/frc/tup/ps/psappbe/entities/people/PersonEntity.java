@@ -46,11 +46,11 @@ public class PersonEntity extends CommonFieldsEntity {
     @Enumerated(EnumType.STRING)
     private PersonStatus status;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "personId")
     @Fetch(FetchMode.SELECT)
     private List<ContactEntity> personalContacts;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "personId", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private List<PlatformNetworkEntity> socialNetworksEntity;
 
@@ -58,7 +58,7 @@ public class PersonEntity extends CommonFieldsEntity {
     @JoinColumn(name = "university_identification_id")
     private IdentificationEntity universityIdentification;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "personId")
     @Fetch(FetchMode.SELECT)
     private List<ContactEntity> universityContacts;
 

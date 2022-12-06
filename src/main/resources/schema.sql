@@ -39,6 +39,7 @@ CREATE TABLE contacts
     record_status VARCHAR(50),
     person_id BIGINT,
     contact_type VARCHAR(255),
+    contact_scope VARCHAR(100),
     value VARCHAR(255)
 );
 
@@ -107,7 +108,8 @@ CREATE TABLE internet_platforms
     base_url VARCHAR(250),
     icon VARCHAR(250),
     is_social_network BIT(1),
-    is_git_platform BIT(1)
+    is_git_platform BIT(1),
+    name VARCHAR(100)
 );
 
 CREATE TABLE platform_networks

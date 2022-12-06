@@ -2,8 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.domain.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.common.CommonFields;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Person;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User extends CommonFields {
 
     public static final String OBJECT_TYPE = "USER";
