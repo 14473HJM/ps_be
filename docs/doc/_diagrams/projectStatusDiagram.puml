@@ -5,6 +5,7 @@ CREATED --> UNDER_PROP_REVIEW : Enviada
 UNDER_PROP_REVIEW -[#green]-> PROP_ACCEPTED : Aceptada
 UNDER_PROP_REVIEW -[#red]-> CREATED : Rechazada
 PROP_ACCEPTED --> WIP : Herramientas cargadas
+PROP_ACCEPTED -[#red]-> UNDER_PROP_REVIEW : Rollback
 WIP --> UNDER_FINAL_REVIEW : Enviada
 UNDER_FINAL_REVIEW -[#green]-> READY_TO_DELIVER : Aceptada
 UNDER_FINAL_REVIEW -[#red]-> WIP : Rechazada

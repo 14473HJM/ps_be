@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -64,6 +65,11 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     @Override
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(true);
+        user.setPasswordExpirationDate(LocalDate.of(2030, 01, 01));
+        user.setCredentialExpired(false);
+        user.setAccountLocked(false);
+        user.setAccountExpired(false);
         return super.create(user);
     }
 }

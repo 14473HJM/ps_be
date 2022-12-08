@@ -526,7 +526,7 @@ CREATE TABLE project_scopes
     deleted_date DATETIME,
     deleted_user VARCHAR(50),
     record_status VARCHAR(50),
-    project BIGINT,
+    project_id BIGINT,
     scope VARCHAR(250)
 );
 
@@ -541,7 +541,7 @@ CREATE TABLE cohorts
     deleted_date DATETIME,
     deleted_user VARCHAR(50),
     record_status VARCHAR(50),
-    quarter TINYINT,
+    quarter INTEGER,
     year YEAR,
     name VARCHAR(100),
     cohort_status VARCHAR(100)

@@ -4,10 +4,12 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers.config;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.config.CodeFramework;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.config.CodeLanguage;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.config.Platform;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.config.Technology;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.services.config.CodeFrameworkService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.config.CodeLanguageService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.config.PlatformService;
+import ar.edu.utn.frc.tup.ps.psappbe.services.config.TechnologyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ public class ConfigurationController {
     private final CodeLanguageService codeLanguageService;
 
     private final PlatformService platformService;
+
+    private final TechnologyService technologyService;
 
     @GetMapping("/code/frameworks")
     public ResponseEntity<List<CodeFramework>> getAllCodeFramework() {
@@ -104,6 +108,33 @@ public class ConfigurationController {
         Platform platform = platformService.getById(id);
         if(platform != null && platform.isDeleted()) {
             platformService.delete(platform);
+        }
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/technologies")
+    public ResponseEntity<List<Technology>> getAllTechnology() {
+        return ResponseEntity.ok(technologyService.getAll());
+    }
+
+    @PostMapping("/technologies")
+    public ResponseEntity<Technology> postTechnology(@RequestBody Technology technology) {
+        technology = technologyService.create(technology);
+        return ResponseEntity.created(null).body(technology);
+    }
+
+    @PutMapping("/technologies/{id}")
+    public ResponseEntity<Technology> putTechnology(@PathVariable Long id,
+                                                @RequestBody Technology technology) {
+        technology = technologyService.update(technology);
+        return ResponseEntity.created(null).body(technology);
+    }
+
+    @DeleteMapping("/technologies/{id}")
+    public ResponseEntity<Technology> deleteTechnology(@PathVariable Long id) {
+        Technology technology = technologyService.getById(id);
+        if(technology != null && technology.isDeleted()) {
+            technologyService.delete(technology);
         }
         return ResponseEntity.ok(null);
     }

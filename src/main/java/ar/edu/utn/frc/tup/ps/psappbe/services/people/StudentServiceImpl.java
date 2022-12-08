@@ -54,18 +54,18 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
     @Override
     public Student create(Student student) {
         // Save Identifications
-        Identification personIdentification = identificationService.create(student.getPersonIdentification());
-        Identification universityIdentification = identificationService.create(student.getUniversityIdentification());
+        createUserIdentifications(student);
         // Save Address
-        Address address = addressService.create(student.getAddress());
+        if(student.getAddress() != null) {
+            Address address = addressService.create(student.getAddress());
+            student.setAddress(address);
+        }
+
         User user = student.getUser();
         user.setRoles(Arrays.asList(Role.STUDENT));
         // Save User
         user = userService.create(student.getUser());
         // Setting information
-        student.setPersonIdentification(personIdentification);
-        student.setUniversityIdentification(universityIdentification);
-        student.setAddress(address);
         student.setUser(user);
         student.setStatus(PersonStatus.ACTIVE);
         // Save Student
@@ -96,6 +96,17 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
             studentDb.setSocialNetworks(platformNetworkService.createAll(student.getSocialNetworks()));
         }
         return studentDb;
+    }
+
+    private void createUserIdentifications(Student student) {
+        if(student.getPersonIdentification() != null) {
+            Identification personIdentification = identificationService.create(student.getPersonIdentification());
+            student.setPersonIdentification(personIdentification);
+        }
+        if(student.getUniversityIdentification() != null) {
+            Identification universityIdentification = identificationService.create(student.getUniversityIdentification());
+            student.setUniversityIdentification(universityIdentification);
+        }
     }
 
     @Override
