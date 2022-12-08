@@ -74,14 +74,14 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
         user.setPerson(studentDb);
         studentDb.setUser(userService.update(user));
         // Save Contacts
-        if(student.getUniversityContacts() != null) {
+        if(student.getUniversityContacts() != null && !student.getUniversityContacts().isEmpty()) {
             student.getUniversityContacts().forEach(contact -> {
                 contact.setContactScope(ContactScope.UNIVERSITY);
                 contact.setPerson(studentDb);
             });
             studentDb.setUniversityContacts(contactService.createAll(student.getUniversityContacts()));
         }
-        if(student.getPersonalContacts() != null) {
+        if(student.getPersonalContacts() != null && !student.getPersonalContacts().isEmpty()) {
             student.getPersonalContacts().forEach(contact -> {
                 contact.setContactScope(ContactScope.PERSONAL);
                 contact.setPerson(studentDb);
@@ -89,7 +89,7 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
             studentDb.setPersonalContacts(contactService.createAll(student.getPersonalContacts()));
         }
         // Save Social Networks
-        if(student.getSocialNetworks() != null) {
+        if(student.getSocialNetworks() != null && !student.getSocialNetworks().isEmpty()) {
             student.getSocialNetworks().forEach(socialNetwork -> {
                 socialNetwork.setPerson(studentDb);
             });
