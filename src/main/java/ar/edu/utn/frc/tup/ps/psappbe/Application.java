@@ -91,13 +91,7 @@ public class Application {
 		User user = new User();
 		user.setUserName("100001");
 		user.setPassword(password);
-		user.setRoles(Arrays.asList(Role.STUDENT));
-		user.setAccountExpired(false);
-		user.setAccountLocked(false);
-		user.setCredentialExpired(false);
-		user.setPasswordExpirationDate(LocalDate.of(2030, 01, 01));
-		user.setEnabled(true);
-		user.setPerson(person);
+		person.setUser(user);
 		return user;
 	}
 
