@@ -45,10 +45,8 @@ public class Application {
 			}
 			User studentUser = userService.getByUserName("100001");
 			if(studentUser == null) {
-				studentUser = createUserStudent("password");
-				Person p = studentService.create((Student) studentUser.getPerson());
-				studentUser.getPerson().setId(p.getId());
-				userService.create(studentUser);
+
+				Person p = studentService.create(createUserStudent("password"));
 			}
 			User professorUser = userService.getByUserName("100002");
 			if(professorUser == null) {
@@ -81,18 +79,19 @@ public class Application {
 		return user;
 	}
 
-	private User createUserStudent(String password) {
-		Person person = new Student();
+	private Student createUserStudent(String password) {
+		Student person = new Student();
 		person.setName("Test");
 		person.setLastName("Student");
 		person.setStatus(PersonStatus.ACTIVE);
 		person.setUniversityIdentification(new Identification("100001", IdentificationType.LEGAJO));
 		person.setPersonIdentification(new Identification("11111111", IdentificationType.DNI));
+		person.setObjectType("STUDENT");
 		User user = new User();
 		user.setUserName("100001");
 		user.setPassword(password);
 		person.setUser(user);
-		return user;
+		return person;
 	}
 
 	private User createUserProfessor(String password) {
