@@ -53,7 +53,7 @@ public class ConfigurationController {
     @DeleteMapping("/code/frameworks/{id}")
     public ResponseEntity<CodeFramework> deleteCodeFramework(@PathVariable Long id) {
         CodeFramework codeFramework = codeFrameworkService.getById(id);
-        if(codeFramework != null && codeFramework.isDeleted()) {
+        if(codeFramework != null && !codeFramework.isDeleted()) {
             codeFrameworkService.delete(codeFramework);
         }
         return ResponseEntity.ok(null);
@@ -79,7 +79,7 @@ public class ConfigurationController {
     @DeleteMapping("/code/languages/{id}")
     public ResponseEntity<CodeLanguage> deleteCodeLanguage(@PathVariable Long id) {
         CodeLanguage codeLanguage = codeLanguageService.getById(id);
-        if(codeLanguage != null && codeLanguage.isDeleted()) {
+        if(codeLanguage != null && !codeLanguage.isDeleted()) {
             codeLanguageService.delete(codeLanguage);
         }
         return ResponseEntity.ok(null);
@@ -106,7 +106,7 @@ public class ConfigurationController {
     @DeleteMapping("/platforms/{id}")
     public ResponseEntity<Platform> deletePlatform(@PathVariable Long id) {
         Platform platform = platformService.getById(id);
-        if(platform != null && platform.isDeleted()) {
+        if(platform != null && !platform.isDeleted()) {
             platformService.delete(platform);
         }
         return ResponseEntity.ok(null);
@@ -133,7 +133,7 @@ public class ConfigurationController {
     @DeleteMapping("/technologies/{id}")
     public ResponseEntity<Technology> deleteTechnology(@PathVariable Long id) {
         Technology technology = technologyService.getById(id);
-        if(technology != null && technology.isDeleted()) {
+        if(technology != null && !technology.isDeleted()) {
             technologyService.delete(technology);
         }
         return ResponseEntity.ok(null);
