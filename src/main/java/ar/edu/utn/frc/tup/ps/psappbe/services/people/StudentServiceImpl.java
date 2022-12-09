@@ -113,10 +113,10 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
     public Student getById(Long id) {
         Student student = super.getById(id);
         if(student != null && student.getUniversityContacts() != null) {
-            student.setUniversityContacts(filterContacts(student.getUniversityContacts(), ContactScope.UNIVERSITY));
+            student.setUniversityContacts(contactService.filterContacts(student.getUniversityContacts(), ContactScope.UNIVERSITY));
         }
         if(student != null && student.getPersonalContacts() != null) {
-            student.setPersonalContacts(filterContacts(student.getPersonalContacts(), ContactScope.PERSONAL));
+            student.setPersonalContacts(contactService.filterContacts(student.getPersonalContacts(), ContactScope.PERSONAL));
         }
         return student;
     }
@@ -127,21 +127,15 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
         if(students != null && !students.isEmpty()) {
             students.forEach((student) -> {
                 if (student != null && student.getUniversityContacts() != null) {
-                    student.setUniversityContacts(filterContacts(student.getUniversityContacts(), ContactScope.UNIVERSITY));
+                    student.setUniversityContacts(contactService.filterContacts(student.getUniversityContacts(), ContactScope.UNIVERSITY));
                 }
                 if (student != null && student.getPersonalContacts() != null) {
-                    student.setPersonalContacts(filterContacts(student.getPersonalContacts(), ContactScope.PERSONAL));
+                    student.setPersonalContacts(contactService.filterContacts(student.getPersonalContacts(), ContactScope.PERSONAL));
                 }
             });
         }
         return students;
     }
 
-
-    private List<Contact> filterContacts(List<Contact> contacts, ContactScope contactScope) {
-        return contacts.stream().filter(
-                contact -> (contact.getContactScope() == contactScope)
-        ).collect(Collectors.toList());
-    }
 }
 

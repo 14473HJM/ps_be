@@ -1,10 +1,12 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
+import ar.edu.utn.frc.tup.ps.psappbe.domain.people.ContactScope;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
+import ar.edu.utn.frc.tup.ps.psappbe.services.people.ContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,6 +31,8 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     private final ModelMapper modelMapper;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ContactService contactService;
     @Override
     protected JpaRepository getJpaRepository() {
         return userRepository;
@@ -46,6 +51,20 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> users = super.getAll();
+        for (User user : users) {
+            if(user.getPerson() != null && user.getPerson().getUniversityContacts() != null) {
+                user.getPerson().setUniversityContacts(contactService.filterContacts(user.getPerson().getUniversityContacts(), ContactScope.UNIVERSITY));
+            }
+            if(user.getPerson() != null && user.getPerson().getPersonalContacts() != null) {
+                user.getPerson().setPersonalContacts(contactService.filterContacts(user.getPerson().getPersonalContacts(), ContactScope.PERSONAL));
+            }
+        }
+        return users;
     }
 
     @Override

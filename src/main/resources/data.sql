@@ -147,4 +147,77 @@ VALUES (12, 'ADDRESS', '2022-12-06 03:33:51', '000000', '2022-12-06 03:33:51', '
 INSERT INTO ps.addresses (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, street, street_number, zip_code, detail, city, province, country)
 VALUES (13, 'ADDRESS', '2022-12-06 03:33:51', '000000', '2022-12-06 03:33:51', '000000', null, null, null, 'Avenida Siempreviva', '1500', '0000', null, 'Springfield', 'C', 'AR');
 
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (1, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 1, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (2, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 1, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (3, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 2, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (4, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 2, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (5, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 3, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (6, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 3, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (7, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 4, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (8, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 4, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (9, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 5, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (10, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 5, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (11, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 6, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (12, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 6, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (13, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 7, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (14, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 7, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (15, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 8, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (16, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 8, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (17, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 9, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (18, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 9, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (19, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 10, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (20, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 10, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (21, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 11, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (22, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 11, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (23, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 12, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (24, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 12, 'CELLPHONE', '3516222059', 'PERSONAL');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (25, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 13, 'EMAIL', 'ps.tecnicatura@gmail.com', 'UNIVERSITY');
+INSERT INTO ps.contacts (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, person_id, contact_type, value, contact_scope)
+VALUES (26, 'CONTACT', '2022-12-06 01:56:14', '000000', '2022-12-06 01:56:14', '000000', null, null, null, 13, 'CELLPHONE', '3516222059', 'PERSONAL');
+
+COMMIT;
+
+INSERT INTO ps.code_frameworks (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, name, type, description, image_link, icon_link)
+VALUES (1, 'CODE_FRAMEWORK', '2022-12-04 17:43:18', '000000', '2022-12-05 22:51:32', '000000', null, null, null, 'Spring Boot', 'Framework de desarrollo en Java', 'Spring Boot es una tecnología para crear aplicaciones autocontenidas.', '/common/config/spring.png', '');
+INSERT INTO ps.code_frameworks (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, name, type, description, image_link, icon_link)
+VALUES (2, 'CODE_FRAMEWORK', '2022-12-08 21:44:57', '000000', '2022-12-08 21:44:57', '000000', null, null, null, 'React', 'Librería JavaScript', 'React te ayuda a crear interfaces de usuario interactivas de forma sencilla. Diseña vistas simples para cada estado en tu aplicación, y se encargará de actualizar y renderizar de manera eficiente los componentes correctos cuando los datos cambien', '/common/config/react.png', null);
+INSERT INTO ps.code_frameworks (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, name, type, description, image_link, icon_link)
+VALUES (3, 'CODE_FRAMEWORK', '2022-12-08 21:51:13', '000000', '2022-12-08 21:51:13', '000000', null, null, null, 'Angular', 'Framework para aplicaciones web en TypeScript', 'Framework para aplicaciones web desarrollado en TypeScript, de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página.', '/common/config/angular.png', null);
+
+INSERT INTO ps.code_languages (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, type, name)
+VALUES (1, 'CODE_LANGUAGE', '2022-12-05 22:34:09', '000000', '2022-12-05 22:34:09', '000000', null, null, null, 'Lenguaje multiplataforma orientado a objetos', 'Java');
+INSERT INTO ps.code_languages (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, type, name)
+VALUES (2, 'CODE_LANGUAGE', '2022-12-05 22:35:21', '000000', '2022-12-05 22:35:21', '000000', null, null, null, 'Lenguaje de código abierto especialmente adecuado para el desarrollo web', 'PHP');
+INSERT INTO ps.code_languages (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, type, name)
+VALUES (3, 'CODE_LANGUAGE', '2022-12-05 22:39:40', '000000', '2022-12-05 22:39:40', '000000', null, null, null, 'Lenguaje de programación o de secuencias de comandos interpretado ligero', 'JavaScript');
+INSERT INTO ps.code_languages (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, type, name)
+VALUES (4, 'CODE_LANGUAGE', '2022-12-05 22:40:44', '000000', '2022-12-05 22:40:44', '000000', null, null, null, 'Lenguaje de programación moderno, basado en objetos y con seguridad de tipos', 'C#');
+INSERT INTO ps.code_languages (id, object_type, created_date, created_user, last_updated_date, last_updated_user, deleted_date, deleted_user, record_status, type, name)
+VALUES (5, 'CODE_LANGUAGE', '2022-12-08 21:30:09', '000000', '2022-12-08 21:30:09', '000000', null, null, null, 'Python es un lenguaje de programación de alto nivel interpretado, orientado a objetos y con semántica dinámica.', 'Python');
+
 COMMIT;
