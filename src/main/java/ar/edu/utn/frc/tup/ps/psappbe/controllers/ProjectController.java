@@ -29,8 +29,9 @@ public class ProjectController {
     public ResponseEntity<List<Project>> getAll(@RequestParam(required = false) Long userId) {
         if(userId != null) {
             return ResponseEntity.ok(projectService.getProjectsByUserId(userId));
+        } else {
+            return ResponseEntity.ok(projectService.getAll());
         }
-        return ResponseEntity.ok(projectService.getAll());
     }
 
     @GetMapping("/projects/{id}")

@@ -8,6 +8,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.ProjectRepository;
@@ -19,10 +20,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.UnavailableException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -110,6 +113,23 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         User user = userService.getById(userId);
         List<ProjectEntity> projectEntities = projectRepository.getAllProjectsByStudentId(user.getPerson().getId());
         return mapList(projectEntities);
+    }
+
+    @Override
+    public List<Project> getAll() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userName == "anonymousUser") {
+            return null;
+        }
+        User user = userService.getByUserName(userName);
+        if(user.getRoles().contains(Role.ADMIN)) {
+            return super.getAll();
+        } else if(user.getRoles().contains(Role.PROFESSOR)) {
+            List<ProjectEntity> projectEntities = projectRepository.getAllByTutor(user.getPerson().getId());
+            return mapList(projectEntities);
+        } else {
+            return this.getProjectsByUserId(user.getId());
+        }
     }
 
     @Override

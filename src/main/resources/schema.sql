@@ -21,7 +21,6 @@ CREATE TABLE people
     career_registration_date DATE,
     image_profile VARCHAR(250),
     academic_status VARCHAR(50),
-    grade_id BIGINT,
     university_profile VARCHAR(50),
     user_id BIGINT
 );
@@ -41,22 +40,6 @@ CREATE TABLE contacts
     contact_type VARCHAR(255),
     contact_scope VARCHAR(100),
     value VARCHAR(255)
-);
-
-CREATE TABLE grades
-(
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    object_type VARCHAR(50),
-    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    created_user VARCHAR(50),
-    last_updated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_updated_user VARCHAR(50),
-    deleted_date DATETIME,
-    deleted_user VARCHAR(50),
-    record_status VARCHAR(50),
-    turn VARCHAR(255),
-    number VARCHAR(255),
-    name VARCHAR(255)
 );
 
 CREATE TABLE identifications
@@ -542,7 +525,7 @@ CREATE TABLE cohorts
     deleted_user VARCHAR(50),
     record_status VARCHAR(50),
     quarter INTEGER,
-    year YEAR,
+    year INTEGER,
     name VARCHAR(100),
     cohort_status VARCHAR(100)
 );
