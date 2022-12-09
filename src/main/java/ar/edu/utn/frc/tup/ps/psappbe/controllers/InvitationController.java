@@ -39,8 +39,22 @@ public class InvitationController {
         return ResponseEntity.ok(invitation);
     }
 
-    @PostMapping("/{id}/resend")
+    @PutMapping("/{id}")
+    public ResponseEntity<Invitation> putInvitation(
+            @PathVariable Long id,
+            @RequestBody Invitation invitation) throws UnavailableException {
+        invitation = invitationService.update(invitation);
+        return ResponseEntity.ok(invitation);
+    }
+
+    @PutMapping("/{id}/resend")
     public ResponseEntity<Invitation> resendInvitation(@PathVariable Long id) throws UnavailableException {
+        Invitation invitation = invitationService.resendInvitation(id);
+        return ResponseEntity.ok(invitation);
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<Invitation> cancelInvitation(@PathVariable Long id) throws UnavailableException {
         Invitation invitation = invitationService.resendInvitation(id);
         return ResponseEntity.ok(invitation);
     }
