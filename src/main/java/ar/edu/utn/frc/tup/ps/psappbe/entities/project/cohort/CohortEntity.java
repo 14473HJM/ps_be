@@ -8,16 +8,23 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "cohorts")
 public class CohortEntity extends CommonFieldsEntity {
 
-    private Integer quarter;
+    private Integer semester;
     private Integer year;
     private String name;
 
     @Enumerated(EnumType.STRING)
     private CohortStatus cohortStatus;
+
+    private LocalDate proposalLimit;
+    private LocalDate workLimit;
+    private LocalDate presentationLimit;
+    private LocalDate endDate;
+    private String folder;
 }

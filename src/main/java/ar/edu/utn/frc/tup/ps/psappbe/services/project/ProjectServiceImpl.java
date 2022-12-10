@@ -6,6 +6,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectScope;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.cohort.Cohort;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
@@ -13,6 +14,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.ProjectRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
+import ar.edu.utn.frc.tup.ps.psappbe.services.files.FileService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusFactoryService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.UserService;
@@ -28,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.UnavailableException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +57,10 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     private final ProjectStatusFactoryService projectStatusFactoryService;
 
+    private final CohortService cohortService;
+
+    private final FileService fileService;
+
     private final ModelMapper modelMapper;
     @Override
     protected JpaRepository getJpaRepository() {
@@ -70,10 +78,20 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         project.setProjectStatus(ProjectStatus.CREATED);
         // Create project conversation
         this.createProjectConversation(project);
+        // Set Project Cohort
+        Cohort cohort = cohortService.getActiveCohort();
+        if(cohort == null) {
+            throw new NoSuchElementException("No hay un Cohorte activo. Contactar con el Administrador de la plataforma.");
+        }
+        project.setCohort(cohort);
         // Create the project
         project = super.create(project);
         // Create tha project scopes
         this.createProjectScopes(project);
+        // Create the project folder
+        String projectFolder = this.createProjectFolder(cohort.getFolder(), project.getId());
+        project.setProjectFolder(projectFolder);
+        project = update(project);
         project = getById(project.getId());
         return project;
     }
@@ -155,9 +173,19 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         Conversation conversation = new Conversation();
         conversation.setTopic("Conversación del proyecto " + project.getName());
         conversation = conversationService.create(conversation);
-        Comment initialComment = new Comment(conversation.getId(), null, INITIAL_PROJECT_COMMENT);
+        Comment initialComment = new Comment(conversation.getId(), userService.getByUserName("000000").getPerson(), INITIAL_PROJECT_COMMENT);
         initialComment = commentService.create(initialComment);
         conversation.setComments(Arrays.asList(initialComment));
         project.setConversation(conversation);
+    }
+
+    private String createProjectFolder(String cohortFolder, Long projectId) {
+        String projectFolder = null;
+        try {
+            projectFolder = fileService.createFolder(projectId.toString(), Arrays.asList(cohortFolder));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return projectFolder;
     }
 }

@@ -110,4 +110,5 @@ public class ProjectEntity extends CommonFieldsEntity {
     @JoinColumn(name = "project_presentation_id")
     private ProjectPresentationEntity projectPresentation;
 
+    private String projectFolder;
 }

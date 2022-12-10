@@ -264,7 +264,8 @@ CREATE TABLE projects
     tutor_id BIGINT,
     academic_condition VARCHAR(100),
     conversation_id BIGINT,
-    project_presentation_id BIGINT
+    project_presentation_id BIGINT,
+    project_folder VARCHAR(250)
 );
 
 CREATE TABLE project_students
@@ -524,8 +525,13 @@ CREATE TABLE cohorts
     deleted_date DATETIME,
     deleted_user VARCHAR(50),
     record_status VARCHAR(50),
-    quarter INTEGER,
+    semester INTEGER,
     year INTEGER,
     name VARCHAR(100),
-    cohort_status VARCHAR(100)
+    cohort_status VARCHAR(100),
+    proposal_limit DATE,
+    work_limit DATE,
+    presentation_limit DATE,
+    end_date DATE,
+    folder VARCHAR(250)
 );

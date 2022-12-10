@@ -100,6 +100,11 @@
 			<version>v1-rev20220404-2.0.0</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-drive</artifactId>
+			<version>v3-rev20220815-2.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>

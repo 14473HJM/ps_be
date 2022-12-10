@@ -62,7 +62,7 @@ public class Project extends CommonFields {
 
     private IssueTracker issueTracker; //MVP
     private List<CodeRepository> codeRepositories; //MVP
-    private List<SystemComponent> systemComponents; //MVP
+    private List<SystemComponent> systemComponents; // NO MVP
 
     @NotEmpty(message = "La lista de estudiantes a cargo del proyecto no puede estar vacia.")
     private List<Student> students; //MVP
@@ -77,6 +77,7 @@ public class Project extends CommonFields {
     private List<Attachment> attachments; //MVP
     private ProjectPresentation projectPresentation; //MVP
 
+    private String projectFolder;
 
     @Override
     public String getObjectTypeName() {
