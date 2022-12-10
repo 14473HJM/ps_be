@@ -43,8 +43,12 @@ public class InvitationController {
     public ResponseEntity<Invitation> putInvitation(
             @PathVariable Long id,
             @RequestBody Invitation invitation) throws UnavailableException {
-        invitation = invitationService.update(invitation);
-        return ResponseEntity.ok(invitation);
+        if(invitation.getId() == id) {
+            invitation = invitationService.update(invitation);
+            return ResponseEntity.ok(invitation);
+        } else {
+            throw new IllegalArgumentException("El recurso enviado no se corresponde con el informado en el path.");
+        }
     }
 
     @PutMapping("/{id}/resend")
@@ -55,7 +59,7 @@ public class InvitationController {
 
     @PutMapping("/{id}/cancel")
     public ResponseEntity<Invitation> cancelInvitation(@PathVariable Long id) throws UnavailableException {
-        Invitation invitation = invitationService.resendInvitation(id);
+        Invitation invitation = invitationService.cancelInvitation(id);
         return ResponseEntity.ok(invitation);
     }
 

@@ -133,6 +133,14 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
         return this.getById(invitationId);
     }
 
+    @Override
+    public Invitation cancelInvitation(Long invitationId) throws UnavailableException {
+        Invitation invitation = this.getById(invitationId);
+        invitation.setInvitationStatus(InvitationStatus.CANCELED);
+        this.update(invitation);
+        return this.getById(invitationId);
+    }
+
     private List<Invitation> getInvitationEntitiesByLegajo(String legajo) {
         List<InvitationEntity> invitationEntityList = invitationRepository.getInvitationEntitiesByLegajo(legajo);
         return mapList(invitationEntityList);

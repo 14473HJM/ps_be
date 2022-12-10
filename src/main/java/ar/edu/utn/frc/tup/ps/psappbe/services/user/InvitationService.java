@@ -18,4 +18,6 @@ public interface InvitationService extends BaseModelService<Invitation, Invitati
     void sendInvitation(Invitation invitation) throws UnavailableException;
 
     Invitation resendInvitation(Long invitationId) throws UnavailableException;
+
+    Invitation cancelInvitation(Long invitationId) throws UnavailableException;
 }
