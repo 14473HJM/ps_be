@@ -19,11 +19,6 @@ public class IssueTrackerEntity extends CommonFieldsEntity {
     private InternetPlatformEntity internetPlatform;
     private String ownerName;
     private String projectName;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "issueTracker")
-    @Fetch(FetchMode.SELECT)
-    private List<IssueTrackerLinkEntity> boardLinksEntity;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "issueTracker")
-    @Fetch(FetchMode.SELECT)
-    private List<IssueTrackerLinkEntity> dashboardLinks;
+    private String projectLink;
 
 }

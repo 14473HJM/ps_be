@@ -13,10 +13,9 @@ public class InternetPlatform extends CommonFields {
     public static final String OBJECT_TYPE = "INTERNET_PLATFORM";
 
     private String name;
+    private InternetPlatformType type;
     private String baseUrl;
-    private String icon;
-    private Boolean isSocialNetwork;
-    private Boolean isGitPlatform;
+    private String linkImageLogo;
 
     @Override
     public String getObjectTypeName() {

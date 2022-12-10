@@ -88,11 +88,10 @@ CREATE TABLE internet_platforms
     deleted_date DATETIME,
     deleted_user VARCHAR(50),
     record_status VARCHAR(50),
+    name VARCHAR(250),
+    type VARCHAR(100),
     base_url VARCHAR(250),
-    icon VARCHAR(250),
-    is_social_network BIT(1),
-    is_git_platform BIT(1),
-    name VARCHAR(100)
+    link_image_logo VARCHAR(250)
 );
 
 CREATE TABLE platform_networks
@@ -326,7 +325,8 @@ CREATE TABLE issue_trackers
     record_status VARCHAR(50),
     internet_platform_id BIGINT,
     owner_name VARCHAR(250),
-    project_name VARCHAR(250)
+    project_name VARCHAR(250),
+    project_link VARCHAR(250)
 );
 
 CREATE TABLE issue_tracker_links

@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "issue_tracker_links")
 public class IssueTrackerLinkEntity extends CommonFieldsEntity {
-    @ManyToOne
+
     @JoinColumn(name = "issue_tracker_id")
-    private IssueTrackerEntity issueTracker;
+    private Long issueTrackerId;
     private String link;
 }

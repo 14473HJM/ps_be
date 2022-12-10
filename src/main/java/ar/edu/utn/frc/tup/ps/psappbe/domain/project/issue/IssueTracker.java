@@ -18,10 +18,8 @@ public class IssueTracker extends CommonFields {
     private Long id;
     private InternetPlatform internetPlatform;
     private String ownerName;
+    private String projectLink;
     private String projectName;
-    private List<String> boardLinks;
-    private List<String> dashboardLinks;
-
 
     @Override
     public String getObjectTypeName() {
