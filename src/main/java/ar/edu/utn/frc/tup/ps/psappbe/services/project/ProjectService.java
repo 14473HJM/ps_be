@@ -22,4 +22,10 @@ public interface ProjectService extends BaseModelService<Project, ProjectEntity>
     Boolean isOwner(Project project, Student student);
 
     Boolean isOwner(Project project, Professor professor);
+
+    Project changeTutor(Long projectId, Long tutorId, Comment comment);
+
+    Project addObserver(Long projectId, Long observerId, Comment comment);
+
+    Project deleteObserver(Long projectId, Long observerId, Comment comment);
 }

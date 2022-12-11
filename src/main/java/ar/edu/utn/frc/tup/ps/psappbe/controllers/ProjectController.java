@@ -8,12 +8,14 @@ import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -56,6 +58,30 @@ public class ProjectController {
                                                 @RequestBody Comment comment,
                                                 @RequestParam ProjectStatusAction action) {
         Project project = projectService.changeProjectStatus(id, comment, action);
-        return ResponseEntity.created(null).body(project);
+        return ResponseEntity.ok(project);
+    }
+
+    @PutMapping("/projects/{id}/tutor/{tutorId}")
+    public ResponseEntity<Project> changeProjectTutor(@PathVariable Long id,
+                                                      @PathVariable Long tutorId,
+                                                @RequestBody Optional<Comment> comment) {
+        Project project = projectService.changeTutor(id, tutorId, comment.orElse(null));
+        return ResponseEntity.ok(project);
+    }
+
+    @PutMapping("/projects/{id}/observers/{tutorId}")
+    public ResponseEntity<Project> addProjectObserver(@PathVariable Long id,
+                                                      @PathVariable Long tutorId,
+                                                      @RequestBody Comment comment) {
+        Project project = projectService.addObserver(id, tutorId, comment);
+        return ResponseEntity.ok(project);
+    }
+
+    @DeleteMapping("/projects/{id}/observers/{observerId}")
+    public ResponseEntity<Project> deleteProjectObserver(@PathVariable Long id,
+                                                         @PathVariable Long observerId,
+                                                         @RequestBody Optional<Comment> comment) {
+        Project project = projectService.deleteObserver(id, observerId, comment.orElse(null));
+        return ResponseEntity.ok(project);
     }
 }

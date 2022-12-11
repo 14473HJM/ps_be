@@ -15,6 +15,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.ProjectRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
 import ar.edu.utn.frc.tup.ps.psappbe.services.files.FileService;
+import ar.edu.utn.frc.tup.ps.psappbe.services.people.ProfessorService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusFactoryService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.status.ProjectStatusService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.UserService;
@@ -45,6 +46,12 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     private static final String INITIAL_PROJECT_COMMENT = "Bienvenido a la plataforma de gestión de Practicas Supervisadas de " +
             "la Tecnicatura Universitaria en Programación.\nEsta conversación puede ser leida por cualquier persona con acceso al proyecto, " +
             "incluidos profesores y alumnos.";
+
+    private static final String TUTOR_ADDED_TO_PROJECT = "Un tutor fue asignado a su proyecto.\nPor favor " +
+            "ponte en contacto con él apenas puedas para empezar a trabajar en tu PS.";
+
+    private static final String CHANGE_TUTOR_PROJECT = "El tutor de tu proyecto ha sido modificado.\nPor favor " +
+            "ponte en contacto con él apenas puedas para seguir trabajando en tu PS.";
     private final ProjectRepository projectRepository;
 
     private final UserService userService;
@@ -60,6 +67,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     private final CohortService cohortService;
 
     private final FileService fileService;
+
+    private final ProfessorService professorService;
 
     private final ModelMapper modelMapper;
     @Override
@@ -177,6 +186,48 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         initialComment = commentService.create(initialComment);
         conversation.setComments(Arrays.asList(initialComment));
         project.setConversation(conversation);
+    }
+
+    public Project changeTutor(Long projectId, Long tutorId, Comment comment) {
+        Project project = getById(projectId);
+        if(comment != null) {
+            comment = commentService.create(comment);
+            project.getConversation().getComments().add(comment);
+        }
+        if(project.getTutor() == null) {
+            Comment autComment = new Comment(project.getConversation().getId(), userService.getByUserName("000000").getPerson(), TUTOR_ADDED_TO_PROJECT);
+            autComment = commentService.create(autComment);
+            project.getConversation().getComments().add(autComment);
+        } else {
+            Comment autComment = new Comment(project.getConversation().getId(), userService.getByUserName("000000").getPerson(), CHANGE_TUTOR_PROJECT);
+            autComment = commentService.create(autComment);
+            project.getConversation().getComments().add(autComment);
+        }
+        Professor professor = professorService.getById(tutorId);
+        project.setTutor(professor);
+        update(project);
+        return project;
+    }
+
+    public Project addObserver(Long projectId, Long observerId, Comment comment) {
+        Project project = getById(projectId);
+        Professor professor = professorService.getById(observerId);
+        if(!project.getObservers().stream().anyMatch(p -> p.getId() == observerId)) {
+            project.getObservers().add(professor);
+            update(project);
+        }
+        return project;
+    }
+
+    public Project deleteObserver(Long projectId, Long observerId, Comment comment) {
+        Project project = getById(projectId);
+        Professor professor = professorService.getById(observerId);
+        // TODO Revisar si funciona
+        if(!project.getObservers().stream().anyMatch(p -> p.getId() == observerId)) {
+            project.getObservers().remove(professor);
+            update(project);
+        }
+        return project;
     }
 
     private String createProjectFolder(String cohortFolder, Long projectId) {
