@@ -47,6 +47,13 @@ public class ProjectController {
         return ResponseEntity.created(null).body(project);
     }
 
+    @PutMapping("/projects/{id}")
+    public ResponseEntity<Project> putProject(@PathVariable Long id,
+                                                @RequestParam Project project) {
+        project = projectService.update(project);
+        return ResponseEntity.ok(project);
+    }
+
     @PostMapping("/projects/{id}/conversation/comments")
     public ResponseEntity<Comment> publishProjectComment(@PathVariable Long id, @RequestBody Comment comment) {
         comment = projectService.publishProjectComment(id, comment);
