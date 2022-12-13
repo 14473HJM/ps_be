@@ -132,7 +132,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
             default:
                 throw new IllegalArgumentException("La acción requida no es correcta.");
         }
-        return finalProject;
+        //ProjectEntity entity = projectRepository.updateStatus(finalProject.getProjectStatus(), projectId);
+        return this.update(finalProject);
     }
 
     @Override

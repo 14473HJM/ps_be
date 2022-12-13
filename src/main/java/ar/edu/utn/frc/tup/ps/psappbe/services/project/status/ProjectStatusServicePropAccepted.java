@@ -45,7 +45,8 @@ public class ProjectStatusServicePropAccepted extends ProjectStatusBaseService i
     void validateMoveOn(Project project) {
         if(isNull(project.getIssueTracker()) ||
                 isNull(project.getCodeRepositories()) || project.getCodeRepositories().isEmpty() ||
-                isNull(project.getSystemComponents()) || project.getSystemComponents().isEmpty() ||
+                //Todo - Volver a poner la regla cuando tengamos esto para despues del MVP
+                //isNull(project.getSystemComponents()) || project.getSystemComponents().isEmpty() ||
                 isNull(project.getTutor())
         ) {
             throw new IllegalArgumentException("Faltan datos necesarios para mover el proyecto a la siguiente etapa.");

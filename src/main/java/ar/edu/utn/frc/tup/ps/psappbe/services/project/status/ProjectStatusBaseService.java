@@ -46,14 +46,15 @@ public abstract class ProjectStatusBaseService implements ProjectStatusService {
         validateOwnership(project, comment);
         if(project.getProjectStatus() != this.current()) {
             throw new IllegalArgumentException("Transición no permitida de " + project.getProjectStatus().name()
-                    + " a " + this.next());
+                    + " a " + next());
         }
         validateMoveOn(project);
 
         Conversation conversation = project.getConversation();
         comment.setConversationId(conversation.getId());
         comment = commentService.create(comment);
-        project.setProjectStatus(this.next());
+        project.setProjectStatus(next());
+
         return project;
     }
 
