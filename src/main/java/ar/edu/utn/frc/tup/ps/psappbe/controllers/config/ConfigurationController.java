@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -33,8 +34,8 @@ public class ConfigurationController {
     private final TechnologyService technologyService;
 
     @GetMapping("/code/frameworks")
-    public ResponseEntity<List<CodeFramework>> getAllCodeFramework() {
-        return ResponseEntity.ok(codeFrameworkService.getAll());
+    public ResponseEntity<List<CodeFramework>> getAllCodeFramework(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(codeFrameworkService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping("/code/frameworks")
@@ -52,15 +53,15 @@ public class ConfigurationController {
 
     @DeleteMapping("/code/frameworks/{id}")
     public ResponseEntity<CodeFramework> deleteCodeFramework(@PathVariable Long id) {
-        CodeFramework codeFramework = codeFrameworkService.getById(id);
+        CodeFramework codeFramework = codeFrameworkService.getById(id, true);
         if(codeFramework != null && !codeFramework.isDeleted()) {
             codeFrameworkService.delete(codeFramework);
         }
         return ResponseEntity.ok(null);
     }
     @GetMapping("/code/languages")
-    public ResponseEntity<List<CodeLanguage>> getAllCodeLanguage() {
-        return ResponseEntity.ok(codeLanguageService.getAll());
+    public ResponseEntity<List<CodeLanguage>> getAllCodeLanguage(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(codeLanguageService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping("/code/languages")
@@ -78,7 +79,7 @@ public class ConfigurationController {
 
     @DeleteMapping("/code/languages/{id}")
     public ResponseEntity<CodeLanguage> deleteCodeLanguage(@PathVariable Long id) {
-        CodeLanguage codeLanguage = codeLanguageService.getById(id);
+        CodeLanguage codeLanguage = codeLanguageService.getById(id, true);
         if(codeLanguage != null && !codeLanguage.isDeleted()) {
             codeLanguageService.delete(codeLanguage);
         }
@@ -86,8 +87,8 @@ public class ConfigurationController {
     }
 
     @GetMapping("/platforms")
-    public ResponseEntity<List<Platform>> getAllPlatform() {
-        return ResponseEntity.ok(platformService.getAll());
+    public ResponseEntity<List<Platform>> getAllPlatform(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(platformService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping("/platforms")
@@ -105,7 +106,7 @@ public class ConfigurationController {
 
     @DeleteMapping("/platforms/{id}")
     public ResponseEntity<Platform> deletePlatform(@PathVariable Long id) {
-        Platform platform = platformService.getById(id);
+        Platform platform = platformService.getById(id, true);
         if(platform != null && !platform.isDeleted()) {
             platformService.delete(platform);
         }
@@ -113,8 +114,8 @@ public class ConfigurationController {
     }
 
     @GetMapping("/technologies")
-    public ResponseEntity<List<Technology>> getAllTechnology() {
-        return ResponseEntity.ok(technologyService.getAll());
+    public ResponseEntity<List<Technology>> getAllTechnology(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(technologyService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping("/technologies")
@@ -132,7 +133,7 @@ public class ConfigurationController {
 
     @DeleteMapping("/technologies/{id}")
     public ResponseEntity<Technology> deleteTechnology(@PathVariable Long id) {
-        Technology technology = technologyService.getById(id);
+        Technology technology = technologyService.getById(id, true);
         if(technology != null && !technology.isDeleted()) {
             technologyService.delete(technology);
         }

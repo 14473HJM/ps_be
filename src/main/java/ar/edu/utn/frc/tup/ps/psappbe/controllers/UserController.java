@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/ps/users")
@@ -21,14 +22,14 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User user = userService.getById(id);
+    public ResponseEntity<User> getUser(@PathVariable Long id, @RequestParam Optional<Boolean> includeDeletes) {
+        User user = userService.getById(id, includeDeletes.orElse(false));
         return ResponseEntity.ok(user);
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getAll();
+    public ResponseEntity<List<User>> getUsers(@RequestParam Optional<Boolean> includeDeletes) {
+        List<User> users = userService.getAll(includeDeletes.orElse(false));
         return ResponseEntity.ok(users);
     }
 

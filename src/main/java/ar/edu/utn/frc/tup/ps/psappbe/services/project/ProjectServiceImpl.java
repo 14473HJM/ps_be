@@ -104,7 +104,7 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         String projectFolder = this.createProjectFolder(cohort.getFolder(), project.getId());
         project.setProjectFolder(projectFolder);
         project = update(project);
-        project = getById(project.getId());
+        project = getById(project.getId(), true);
         return project;
     }
 
@@ -118,16 +118,16 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     @Override
     public Comment publishProjectComment(Long projectId, Comment comment) {
-        Project project = getById(projectId);
+        Project project = getById(projectId, true);
         Conversation conversation = project.getConversation();
         comment.setConversationId(conversation.getId());
         comment = commentService.create(comment);
-        return commentService.getById(comment.getId());
+        return commentService.getById(comment.getId(), true);
     }
 
     @Override
     public Project changeProjectStatus(Long projectId, Comment comment, ProjectStatusAction action) {
-        Project initialProject = getById(projectId);
+        Project initialProject = getById(projectId, true);
         Project finalProject;
         ProjectStatusService projectStatusService = projectStatusFactoryService.getProjectStatusService(initialProject);
         switch (action) {
@@ -148,26 +148,26 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     }
 
     @Override
-    public List<Project> getProjectsByUserId(Long userId) {
-        User user = userService.getById(userId);
+    public List<Project> getProjectsByUserId(Long userId, Boolean includeDeletes) {
+        User user = userService.getById(userId, includeDeletes);
         List<ProjectEntity> projectEntities = projectRepository.getAllProjectsByStudentId(user.getPerson().getId());
         return mapList(projectEntities);
     }
 
     @Override
-    public List<Project> getAll() {
+    public List<Project> getAll(Boolean includeDeletes) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         if(userName == "anonymousUser") {
             return null;
         }
         User user = userService.getByUserName(userName);
         if(user.getRoles().contains(Role.ADMIN)) {
-            return super.getAll();
+            return super.getAll(includeDeletes);
         } else if(user.getRoles().contains(Role.PROFESSOR)) {
             List<ProjectEntity> projectEntities = projectRepository.getAllByTutor(user.getPerson().getId());
             return mapList(projectEntities);
         } else {
-            return this.getProjectsByUserId(user.getId());
+            return this.getProjectsByUserId(user.getId(), includeDeletes);
         }
     }
 
@@ -184,27 +184,18 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     }
 
     private void createOrUpdateIssueTracker(Project project) {
-        if(project.getIssueTracker() != null) {
-            if(project.getIssueTracker().getId() != null) {
-                issueTrackerService.update(project.getIssueTracker());
-            } else {
-                IssueTracker issueTracker = issueTrackerService.create(project.getIssueTracker());
-                project.setIssueTracker(issueTracker);
-            }
-        }
+        IssueTracker issueTracker = issueTrackerService.createUpdateOrDelete(project.getIssueTracker());
+        project.setIssueTracker(issueTracker);
     }
 
     private void createOrUpdateCodeRepositories(Project project) {
         List<CodeRepository> finalList = new LinkedList<>();
         if(project.getCodeRepositories() != null && !project.getCodeRepositories().isEmpty()) {
             for(CodeRepository repository : project.getCodeRepositories()) {
-                CodeRepository codeRepository;
-                if(repository.getId() != null) {
-                    codeRepository = codeRepositoryService.update(repository);
-                } else {
-                    codeRepository = codeRepositoryService.create(repository);
+                CodeRepository codeRepository = codeRepositoryService.createUpdateOrDelete(repository);
+                if(codeRepository != null) {
+                    finalList.add(codeRepository);
                 }
-                finalList.add(codeRepository);
             }
             project.setCodeRepositories(finalList);
         }
@@ -214,13 +205,13 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         List<ProjectScope> finalList = new LinkedList<>();
         if(project.getScopes() != null && !project.getScopes().isEmpty()) {
             for(ProjectScope scope : project.getScopes()) {
-                ProjectScope projectScope;
-                if(scope.getId() != null) {
-                    projectScope = projectScopeService.update(scope);
-                } else {
-                    projectScope = projectScopeService.create(scope);
+                if(scope.getProjectId() == null) {
+                    scope.setProjectId(project.getId());
                 }
-                finalList.add(projectScope);
+                ProjectScope projectScope = projectScopeService.createUpdateOrDelete(scope);
+                if(projectScope != null) {
+                    finalList.add(projectScope);
+                }
             }
             project.setScopes(finalList);
         }
@@ -244,7 +235,7 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     }
 
     public Project changeTutor(Long projectId, Long tutorId, Comment comment) {
-        Project project = getById(projectId);
+        Project project = getById(projectId, true);
         if(comment != null) {
             comment = commentService.create(comment);
             project.getConversation().getComments().add(comment);
@@ -258,15 +249,15 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
             autComment = commentService.create(autComment);
             project.getConversation().getComments().add(autComment);
         }
-        Professor professor = professorService.getById(tutorId);
+        Professor professor = professorService.getById(tutorId, true);
         project.setTutor(professor);
         update(project);
         return project;
     }
 
     public Project addObserver(Long projectId, Long observerId, Comment comment) {
-        Project project = getById(projectId);
-        Professor professor = professorService.getById(observerId);
+        Project project = getById(projectId, true);
+        Professor professor = professorService.getById(observerId, true);
         if(!project.getObservers().stream().anyMatch(p -> p.getId() == observerId)) {
             project.getObservers().add(professor);
             update(project);
@@ -275,8 +266,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     }
 
     public Project deleteObserver(Long projectId, Long observerId, Comment comment) {
-        Project project = getById(projectId);
-        Professor professor = professorService.getById(observerId);
+        Project project = getById(projectId, true);
+        Professor professor = professorService.getById(observerId, true);
         // TODO Revisar si funciona
         if(!project.getObservers().stream().anyMatch(p -> p.getId() == observerId)) {
             project.getObservers().remove(professor);

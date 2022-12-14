@@ -17,7 +17,7 @@ public interface ProjectService extends BaseModelService<Project, ProjectEntity>
 
     Project changeProjectStatus(Long projectId, Comment comment, ProjectStatusAction action);
 
-    List<Project> getProjectsByUserId(Long userId);
+    List<Project> getProjectsByUserId(Long userId, Boolean includeDeletes);
 
     Boolean isOwner(Project project, Student student);
 

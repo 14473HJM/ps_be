@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -20,8 +21,8 @@ public class InternetPlatformController {
     private final InternetPlatformService internetPlatformService;
 
     @GetMapping()
-    public ResponseEntity<List<InternetPlatform>> getAll() {
-        return ResponseEntity.ok(internetPlatformService.getAll());
+    public ResponseEntity<List<InternetPlatform>> getAll(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(internetPlatformService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping()
@@ -39,7 +40,7 @@ public class InternetPlatformController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<InternetPlatform> delete(@PathVariable Long id) {
-        InternetPlatform element = internetPlatformService.getById(id);
+        InternetPlatform element = internetPlatformService.getById(id, true);
         if(element != null && !element.isDeleted()) {
             internetPlatformService.delete(element);
         }

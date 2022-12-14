@@ -35,7 +35,7 @@ public class InvitationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Invitation> getInvitation(@PathVariable Long id) {
-        Invitation invitation = invitationService.getById(id);
+        Invitation invitation = invitationService.getById(id, true);
         return ResponseEntity.ok(invitation);
     }
 
@@ -64,12 +64,13 @@ public class InvitationController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Invitation>> getAll(@RequestParam Optional<String> user) {
+    public ResponseEntity<List<Invitation>> getAll(@RequestParam Optional<String> user,
+                                                   @RequestParam Optional<Boolean> includeDeletes) {
         List<Invitation> invitationList;
         if(user.isPresent()) {
             invitationList = invitationService.getInvitations(user.get());
         } else {
-            invitationList = invitationService.getAll();
+            invitationList = invitationService.getAll(includeDeletes.orElse(false));
         }
         return ResponseEntity.ok(invitationList);
     }

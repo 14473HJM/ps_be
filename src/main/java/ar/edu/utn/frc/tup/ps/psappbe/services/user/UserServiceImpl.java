@@ -54,8 +54,8 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     }
 
     @Override
-    public List<User> getAll() {
-        List<User> users = super.getAll();
+    public List<User> getAll(Boolean includeDeletes) {
+        List<User> users = super.getAll(includeDeletes);
         for (User user : users) {
             if(user.getPerson() != null && user.getPerson().getUniversityContacts() != null) {
                 user.getPerson().setUniversityContacts(contactService.filterContacts(user.getPerson().getUniversityContacts(), ContactScope.UNIVERSITY));

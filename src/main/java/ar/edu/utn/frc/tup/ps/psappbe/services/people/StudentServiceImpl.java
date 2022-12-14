@@ -110,8 +110,8 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
     }
 
     @Override
-    public Student getById(Long id) {
-        Student student = super.getById(id);
+    public Student getById(Long id, Boolean includeDeletes) {
+        Student student = super.getById(id, includeDeletes);
         if(student != null && student.getUniversityContacts() != null) {
             student.setUniversityContacts(contactService.filterContacts(student.getUniversityContacts(), ContactScope.UNIVERSITY));
         }
@@ -122,8 +122,8 @@ public class StudentServiceImpl extends BaseModelServiceImpl<Student, StudentEnt
     }
 
     @Override
-    public List<Student> getAll() {
-        List<Student> students = super.getAll();
+    public List<Student> getAll(Boolean includeDeletes) {
+        List<Student> students = super.getAll(includeDeletes);
         if(students != null && !students.isEmpty()) {
             students.forEach((student) -> {
                 if (student != null && student.getUniversityContacts() != null) {

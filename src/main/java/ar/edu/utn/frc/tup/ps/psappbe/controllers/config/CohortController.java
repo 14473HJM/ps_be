@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -21,8 +22,8 @@ public class CohortController {
     private final CohortService cohortService;
 
     @GetMapping()
-    public ResponseEntity<List<Cohort>> getAll() {
-        return ResponseEntity.ok(cohortService.getAll());
+    public ResponseEntity<List<Cohort>> getAll(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(cohortService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping()
@@ -40,7 +41,7 @@ public class CohortController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cohort> delete(@PathVariable Long id) {
-        Cohort element = cohortService.getById(id);
+        Cohort element = cohortService.getById(id, true);
         if(element != null && !element.isDeleted()) {
             cohortService.delete(element);
         }

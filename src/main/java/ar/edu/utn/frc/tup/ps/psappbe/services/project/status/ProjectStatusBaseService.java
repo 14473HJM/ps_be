@@ -117,14 +117,14 @@ public abstract class ProjectStatusBaseService implements ProjectStatusService {
                 comment.getCommentator().getId() != null &&
                 comment.getCommentator().getObjectType() != null) {
             if(comment.getCommentator().getObjectType() == Professor.OBJECT_TYPE) {
-                Professor professor = professorService.getById(comment.getCommentator().getId());
+                Professor professor = professorService.getById(comment.getCommentator().getId(), true);
                 if(!isOwner(project, professor) ||
                         !userService.isAdmin(professor.getUser())) {
                     throw new IllegalArgumentException("Esta transición solo esta permitida para el profesor " +
                             "asignado como tutor de la PS o un Usuario administrador.");
                 }
             } else {
-                Student student = studentService.getById(comment.getCommentator().getId());
+                Student student = studentService.getById(comment.getCommentator().getId(), true);
                 if(!isOwner(project, student) ||
                         !userService.isAdmin(student.getUser())) {
                     throw new IllegalArgumentException("Esta transición solo esta permitida para alumnos " +

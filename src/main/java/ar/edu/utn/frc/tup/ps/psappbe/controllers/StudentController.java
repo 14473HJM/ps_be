@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -20,8 +21,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping()
-    public ResponseEntity<List<Student>> getAll() {
-        return ResponseEntity.ok(studentService.getAll());
+    public ResponseEntity<List<Student>> getAll(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(studentService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping()

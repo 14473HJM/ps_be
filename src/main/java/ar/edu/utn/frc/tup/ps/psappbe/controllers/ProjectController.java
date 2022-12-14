@@ -28,17 +28,19 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/projects")
-    public ResponseEntity<List<Project>> getAll(@RequestParam(required = false) Long userId) {
+    public ResponseEntity<List<Project>> getAll(@RequestParam(required = false) Long userId,
+                                                @RequestParam Optional<Boolean> includeDeletes) {
         if(userId != null) {
-            return ResponseEntity.ok(projectService.getProjectsByUserId(userId));
+            return ResponseEntity.ok(projectService.getProjectsByUserId(userId, includeDeletes.orElse(false)));
         } else {
-            return ResponseEntity.ok(projectService.getAll());
+            return ResponseEntity.ok(projectService.getAll(includeDeletes.orElse(false)));
         }
     }
 
     @GetMapping("/projects/{id}")
-    public ResponseEntity<Project> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(projectService.getById(id));
+    public ResponseEntity<Project> getById(@PathVariable Long id,
+                                           @RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(projectService.getById(id, includeDeletes.orElse(false)));
     }
 
     @PostMapping("/projects")

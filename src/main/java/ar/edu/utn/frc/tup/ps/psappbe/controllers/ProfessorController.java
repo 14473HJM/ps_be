@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -22,8 +24,8 @@ public class ProfessorController {
     private final ProfessorService professorService;
 
     @GetMapping()
-    public ResponseEntity<List<Professor>> getAll() {
-        return ResponseEntity.ok(professorService.getAll());
+    public ResponseEntity<List<Professor>> getAll(@RequestParam Optional<Boolean> includeDeletes) {
+        return ResponseEntity.ok(professorService.getAll(includeDeletes.orElse(false)));
     }
 
     @PostMapping()

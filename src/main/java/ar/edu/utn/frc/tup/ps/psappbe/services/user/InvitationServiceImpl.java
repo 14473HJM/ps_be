@@ -67,7 +67,7 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
             } catch (UnavailableException e) {
                 log.error("Error al enviar la invitación.", e);
             }
-            return this.getById(invitation.getId());
+            return this.getById(invitation.getId(), true);
         } else {
             // if exist at least one invitation
             for(Invitation invitation : invitationList) {
@@ -93,7 +93,7 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
             } catch (UnavailableException e) {
                 log.error("Error al enviar la invitación.", e);
             }
-            return this.getById(invitation.getId());
+            return this.getById(invitation.getId(), true);
         }
     }
 
@@ -126,19 +126,19 @@ public class InvitationServiceImpl extends BaseModelServiceImpl<Invitation, Invi
 
     @Override
     public Invitation resendInvitation(Long invitationId) throws UnavailableException {
-        Invitation invitation = this.getById(invitationId);
+        Invitation invitation = this.getById(invitationId, true);
         sendInvitation(invitation);
         invitation.setNumberOfDeliveries(invitation.getNumberOfDeliveries() + 1);
         this.update(invitation);
-        return this.getById(invitationId);
+        return this.getById(invitationId, true);
     }
 
     @Override
     public Invitation cancelInvitation(Long invitationId) throws UnavailableException {
-        Invitation invitation = this.getById(invitationId);
+        Invitation invitation = this.getById(invitationId, true);
         invitation.setInvitationStatus(InvitationStatus.CANCELED);
         this.update(invitation);
-        return this.getById(invitationId);
+        return this.getById(invitationId, true);
     }
 
     private List<Invitation> getInvitationEntitiesByLegajo(String legajo) {
