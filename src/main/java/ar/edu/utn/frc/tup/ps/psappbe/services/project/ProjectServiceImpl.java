@@ -192,6 +192,9 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         List<CodeRepository> finalList = new LinkedList<>();
         if(project.getCodeRepositories() != null && !project.getCodeRepositories().isEmpty()) {
             for(CodeRepository repository : project.getCodeRepositories()) {
+                if(repository.getProjectId() == null) {
+                    repository.setProjectId(project.getId());
+                }
                 CodeRepository codeRepository = codeRepositoryService.createUpdateOrDelete(repository);
                 if(codeRepository != null) {
                     finalList.add(codeRepository);
