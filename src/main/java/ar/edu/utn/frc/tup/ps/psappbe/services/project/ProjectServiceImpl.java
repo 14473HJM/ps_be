@@ -2,13 +2,11 @@ package ar.edu.utn.frc.tup.ps.psappbe.services.project;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Professor;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Student;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectScope;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.*;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.cohort.Cohort;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.IssueTracker;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
@@ -33,6 +31,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -70,6 +69,10 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     private final ProfessorService professorService;
 
+    private final IssueTrackerService issueTrackerService;
+
+    private final CodeRepositoryService codeRepositoryService;
+
     private final ModelMapper modelMapper;
     @Override
     protected JpaRepository getJpaRepository() {
@@ -103,6 +106,14 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         project = update(project);
         project = getById(project.getId());
         return project;
+    }
+
+    @Override
+    public Project update(Project project) {
+        createOrUpdateIssueTracker(project);
+        createOrUpdateCodeRepositories(project);
+        createOrUpdateScopes(project);
+        return super.update(project);
     }
 
     @Override
@@ -170,6 +181,49 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     @Override
     public Boolean isOwner(Project project, Professor professor) {
         return project.getTutor().getId() == project.getId();
+    }
+
+    private void createOrUpdateIssueTracker(Project project) {
+        if(project.getIssueTracker() != null) {
+            if(project.getIssueTracker().getId() != null) {
+                issueTrackerService.update(project.getIssueTracker());
+            } else {
+                IssueTracker issueTracker = issueTrackerService.create(project.getIssueTracker());
+                project.setIssueTracker(issueTracker);
+            }
+        }
+    }
+
+    private void createOrUpdateCodeRepositories(Project project) {
+        List<CodeRepository> finalList = new LinkedList<>();
+        if(project.getCodeRepositories() != null && !project.getCodeRepositories().isEmpty()) {
+            for(CodeRepository repository : project.getCodeRepositories()) {
+                CodeRepository codeRepository;
+                if(repository.getId() != null) {
+                    codeRepository = codeRepositoryService.update(repository);
+                } else {
+                    codeRepository = codeRepositoryService.create(repository);
+                }
+                finalList.add(codeRepository);
+            }
+            project.setCodeRepositories(finalList);
+        }
+    }
+
+    private void createOrUpdateScopes(Project project) {
+        List<ProjectScope> finalList = new LinkedList<>();
+        if(project.getScopes() != null && !project.getScopes().isEmpty()) {
+            for(ProjectScope scope : project.getScopes()) {
+                ProjectScope projectScope;
+                if(scope.getId() != null) {
+                    projectScope = projectScopeService.update(scope);
+                } else {
+                    projectScope = projectScopeService.create(scope);
+                }
+                finalList.add(projectScope);
+            }
+            project.setScopes(finalList);
+        }
     }
 
     private void createProjectScopes(Project project) {
