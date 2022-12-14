@@ -29,15 +29,10 @@ public class User extends CommonFields {
     private List<Role> roles;
     private String avatar;
 
-    @JsonIgnore
     private Boolean enabled;
-    @JsonIgnore
     private Boolean accountExpired;
-    @JsonIgnore
     private Boolean accountLocked;
-    @JsonIgnore
     private LocalDate passwordExpirationDate;
-    @JsonIgnore
     private Boolean credentialExpired;
 
     @Override
