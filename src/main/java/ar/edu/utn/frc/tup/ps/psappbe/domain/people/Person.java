@@ -25,6 +25,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Professor.class, name = "PROFESSOR")
 })
 @JsonIdentityInfo(
+        scope = Person.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Person extends CommonFields {

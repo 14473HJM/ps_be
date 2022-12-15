@@ -13,7 +13,6 @@ public class CodeRepository extends CommonFields {
 
     public static final String OBJECT_TYPE = "CODE_REPOSITORY";
 
-    private Long id;
     private Long projectId;
     private InternetPlatform internetPlatform;
     private String ownerName;

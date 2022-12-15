@@ -56,7 +56,7 @@ public class ProjectEntity extends CommonFieldsEntity {
     @JoinColumn(name = "issue_tracker_id")
     private IssueTrackerEntity issueTracker;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projectId")
     @Fetch(FetchMode.SELECT)
     private List<CodeRepositoryEntity> codeRepositories;
 

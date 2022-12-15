@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(
+        scope = User.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class User extends CommonFields {
