@@ -71,7 +71,7 @@ public abstract class BaseModelServiceImpl<M extends CommonFields, E extends Com
             return modelList;
         } else {
             return modelList.stream()
-                    .filter(m -> m.getRecordStatus() == DELETED_STATUS)
+                    .filter(m -> m.getRecordStatus() != DELETED_STATUS)
                     .collect(Collectors.toList());
         }
     }
