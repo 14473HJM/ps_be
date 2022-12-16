@@ -75,6 +75,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     private final ProjectPresentationService projectPresentationService;
 
+    private final ValuationService valuationService;
+
     private final ModelMapper modelMapper;
     @Override
     protected JpaRepository getJpaRepository() {
@@ -192,6 +194,13 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
         project.setProjectPresentation(projectPresentation);
         update(project);
         return projectPresentation;
+    }
+
+    @Override
+    public List<Valuation> publishProjectValuations(Long projectId, List<Valuation> valuations) {
+        valuations.forEach(valuation -> valuation.setProjectId(projectId));
+        valuations = valuationService.createAll(valuations);
+        return valuations;
     }
 
     private void createOrUpdateIssueTracker(Project project) {

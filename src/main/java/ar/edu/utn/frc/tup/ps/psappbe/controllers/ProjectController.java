@@ -4,6 +4,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectPresentation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Valuation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.ProjectService;
@@ -99,5 +100,11 @@ public class ProjectController {
     public ResponseEntity<ProjectPresentation> publishProjectPresentation(@PathVariable Long id, @RequestBody ProjectPresentation projectPresentation) {
         projectPresentation = projectService.publishProjectPresentation(id, projectPresentation);
         return ResponseEntity.created(null).body(projectPresentation);
+    }
+
+    @PostMapping("/projects/{id}/valuations")
+    public ResponseEntity<List<Valuation>> publishProjectValuations(@PathVariable Long id, @RequestBody List<Valuation> valuations) {
+        valuations = projectService.publishProjectValuations(id, valuations);
+        return ResponseEntity.created(null).body(valuations);
     }
 }

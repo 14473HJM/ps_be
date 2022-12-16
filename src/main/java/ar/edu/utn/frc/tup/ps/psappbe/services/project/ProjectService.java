@@ -2,13 +2,12 @@ package ar.edu.utn.frc.tup.ps.psappbe.services.project;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Professor;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Student;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectPresentation;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
-import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.*;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.project.ProjectEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -31,4 +30,6 @@ public interface ProjectService extends BaseModelService<Project, ProjectEntity>
     Project deleteObserver(Long projectId, Long observerId, Comment comment);
 
     ProjectPresentation publishProjectPresentation(Long projectId, ProjectPresentation projectPresentation);
+
+    List<Valuation> publishProjectValuations(Long projectId, List<Valuation> valuations);
 }

@@ -15,7 +15,7 @@ public class Valuation extends CommonFields {
 
     public static final String OBJECT_TYPE = "VALUATION";
 
-    private Long id;
+    private Long projectId;
     private ValuationType valuationType;
     private BigDecimal value;
     private Professor evaluator;
