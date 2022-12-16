@@ -14,7 +14,7 @@ public class ProjectPresentation extends CommonFields {
 
     private String presentationVideoLink;
     private String demoVideoLink;
-    private String finalDocument;
+    private String finalDocumentLink;
     private String deliveryLink;
 
     @Override

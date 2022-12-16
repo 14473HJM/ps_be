@@ -16,6 +16,6 @@ public class ProjectPresentationEntity extends CommonFieldsEntity {
 
     private String presentationVideoLink;
     private String demoVideoLink;
-    private String finalDocument;
+    private String finalDocumentLink;
     private String deliveryLink;
 }

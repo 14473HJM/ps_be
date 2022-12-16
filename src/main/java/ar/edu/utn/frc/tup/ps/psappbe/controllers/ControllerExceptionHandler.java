@@ -3,6 +3,9 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 import ar.edu.utn.frc.tup.ps.psappbe.dtos.ErrorApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +27,24 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorApi> handleError(Exception exception) {
         ErrorApi error = buildError(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<ErrorApi> handleError(DisabledException exception) {
+        ErrorApi error = buildError("La cuenta se encuentra deshabilitada", HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(LockedException.class)
+    public ResponseEntity<ErrorApi> handleError(LockedException exception) {
+        ErrorApi error = buildError("La cuenta se encuentra bloqueada", HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorApi> handleError(BadCredentialsException exception) {
+        ErrorApi error = buildError("Las credenciales facilitadas son incorrectas", HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

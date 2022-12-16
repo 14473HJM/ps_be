@@ -42,8 +42,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEntity> implements ProjectService {
 
-    private static final String INITIAL_PROJECT_COMMENT = "Bienvenido a la plataforma de gestión de Practicas Supervisadas de " +
-            "la Tecnicatura Universitaria en Programación.\nEsta conversación puede ser leida por cualquier persona con acceso al proyecto, " +
+    private static final String INITIAL_PROJECT_COMMENT = "Bienvenido a la plataforma de gestión de Prácticas Supervisadas de " +
+            "la Tecnicatura Universitaria en Programación.\nEsta conversación puede ser leída por cualquier persona con acceso al proyecto, " +
             "incluidos profesores y alumnos.";
 
     private static final String TUTOR_ADDED_TO_PROJECT = "Un tutor fue asignado a su proyecto.\nPor favor " +

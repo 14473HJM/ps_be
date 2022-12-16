@@ -44,7 +44,7 @@ public class ProjectStatusServiceReadyToDeliver extends ProjectStatusBaseService
     @Override
     void validateMoveOn(Project project) {
         if(isNull(project.getProjectPresentation()) ||
-                isNull(project.getProjectPresentation().getFinalDocument()) ||
+                isNull(project.getProjectPresentation().getFinalDocumentLink()) ||
                 isNull(project.getProjectPresentation().getDemoVideoLink()) ||
                 isNull(project.getProjectPresentation().getPresentationVideoLink())
         ) {
