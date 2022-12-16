@@ -240,6 +240,7 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     public Project changeTutor(Long projectId, Long tutorId, Comment comment) {
         Project project = getById(projectId, true);
         if(comment != null) {
+            comment.setConversationId(project.getConversation().getId());
             comment = commentService.create(comment);
             project.getConversation().getComments().add(comment);
         }
