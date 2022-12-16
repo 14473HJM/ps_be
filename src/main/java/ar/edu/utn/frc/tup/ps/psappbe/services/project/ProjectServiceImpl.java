@@ -73,6 +73,8 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
 
     private final CodeRepositoryService codeRepositoryService;
 
+    private final ProjectPresentationService projectPresentationService;
+
     private final ModelMapper modelMapper;
     @Override
     protected JpaRepository getJpaRepository() {
@@ -181,6 +183,15 @@ public class ProjectServiceImpl extends BaseModelServiceImpl<Project, ProjectEnt
     @Override
     public Boolean isOwner(Project project, Professor professor) {
         return project.getTutor().getId() == project.getId();
+    }
+
+    @Override
+    public ProjectPresentation publishProjectPresentation(Long projectId, ProjectPresentation projectPresentation) {
+        projectPresentation = projectPresentationService.create(projectPresentation);
+        Project project = getById(projectId, true);
+        project.setProjectPresentation(projectPresentation);
+        update(project);
+        return projectPresentation;
     }
 
     private void createOrUpdateIssueTracker(Project project) {

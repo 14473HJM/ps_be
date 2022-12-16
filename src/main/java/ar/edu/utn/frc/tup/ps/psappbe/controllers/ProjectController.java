@@ -2,6 +2,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectPresentation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelService;
@@ -92,5 +93,11 @@ public class ProjectController {
                                                          @RequestBody Optional<Comment> comment) {
         Project project = projectService.deleteObserver(id, observerId, comment.orElse(null));
         return ResponseEntity.ok(project);
+    }
+
+    @PostMapping("/projects/{id}/presentation")
+    public ResponseEntity<ProjectPresentation> publishProjectPresentation(@PathVariable Long id, @RequestBody ProjectPresentation projectPresentation) {
+        projectPresentation = projectService.publishProjectPresentation(id, projectPresentation);
+        return ResponseEntity.created(null).body(projectPresentation);
     }
 }

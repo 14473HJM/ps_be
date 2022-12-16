@@ -3,6 +3,7 @@ package ar.edu.utn.frc.tup.ps.psappbe.services.project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Professor;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.Student;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectPresentation;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatusAction;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
@@ -28,4 +29,6 @@ public interface ProjectService extends BaseModelService<Project, ProjectEntity>
     Project addObserver(Long projectId, Long observerId, Comment comment);
 
     Project deleteObserver(Long projectId, Long observerId, Comment comment);
+
+    ProjectPresentation publishProjectPresentation(Long projectId, ProjectPresentation projectPresentation);
 }

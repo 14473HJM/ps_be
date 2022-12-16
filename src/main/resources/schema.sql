@@ -293,7 +293,7 @@ CREATE TABLE project_presentations
     record_status VARCHAR(50),
     presentation_video_link VARCHAR(250),
     demo_video_link VARCHAR(250),
-    final_document_id BIGINT,
+    final_document_link VARCHAR(250),
     delivery_link VARCHAR(250)
 );
 

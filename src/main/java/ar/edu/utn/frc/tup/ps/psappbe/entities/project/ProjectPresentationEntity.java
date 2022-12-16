@@ -16,9 +16,6 @@ public class ProjectPresentationEntity extends CommonFieldsEntity {
 
     private String presentationVideoLink;
     private String demoVideoLink;
-
-    @OneToOne
-    @JoinColumn(name = "final_document_id")
-    private AttachmentEntity finalDocument;
+    private String finalDocument;
     private String deliveryLink;
 }
