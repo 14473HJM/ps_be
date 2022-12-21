@@ -18,7 +18,7 @@ public class Valuation extends CommonFields {
     private Long projectId;
     private ValuationType valuationType;
     private BigDecimal value;
-    private Professor evaluator;
+    //private Professor evaluator;
     private String resume;
 
     @Override

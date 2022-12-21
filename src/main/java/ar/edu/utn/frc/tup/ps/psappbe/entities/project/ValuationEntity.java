@@ -5,6 +5,8 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ValuationType;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.common.CommonFieldsEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.people.ProfessorEntity;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,9 +23,9 @@ public class ValuationEntity extends CommonFieldsEntity {
     private ValuationType valuationType;
     private BigDecimal value;
 
-    @ManyToOne
-    @JoinColumn(name = "evaluator_id")
-    private ProfessorEntity evaluator;
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "evaluator_id", referencedColumnName = "id")
+//    private ProfessorEntity evaluator;
     private String resume;
 
 }

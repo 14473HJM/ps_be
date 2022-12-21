@@ -10,6 +10,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Meeting;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.Issue;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.issue.IssueTracker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,6 +69,7 @@ public class Project extends CommonFields {
     private List<Student> students; //MVP
     private Professor tutor; //MVP
     private List<Professor> observers; //NO MVP
+    @JsonManagedReference
     private List<Valuation> valuations; //MVP
 
     private List<Meeting> meetings; //NO MVP
