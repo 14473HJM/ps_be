@@ -1,6 +1,7 @@
 package ar.edu.utn.frc.tup.ps.psappbe.controllers;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.address.Address;
+import ar.edu.utn.frc.tup.ps.psappbe.services.auth.AuthService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.AddressService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.user.UserService;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
@@ -37,5 +38,11 @@ public class UserController {
     public ResponseEntity<User> postUser(@RequestBody User user) {
         user = userService.create(user);
         return ResponseEntity.created(null).body(user);
+    }
+
+    @PostMapping("/{id}/reset")
+    public ResponseEntity<String> resetPassword(@PathVariable Long id) {
+        userService.resetPassword(id);
+        return ResponseEntity.ok("La password fue enviada al email del usuario.");
     }
 }

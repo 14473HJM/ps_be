@@ -11,4 +11,6 @@ public interface UserService extends BaseModelService<User, UserEntity> {
     Boolean isAdmin(User user);
 
     void changePassword(String userName, String password);
+
+    void resetPassword(Long userId);
 }

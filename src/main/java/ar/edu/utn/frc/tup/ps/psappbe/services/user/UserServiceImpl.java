@@ -1,23 +1,28 @@
 package ar.edu.utn.frc.tup.ps.psappbe.services.user;
 
 import ar.edu.utn.frc.tup.ps.psappbe.domain.people.ContactScope;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.people.ContactType;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.Role;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.entities.user.UserEntity;
 import ar.edu.utn.frc.tup.ps.psappbe.repository.UserRepository;
 import ar.edu.utn.frc.tup.ps.psappbe.services.BaseModelServiceImpl;
+import ar.edu.utn.frc.tup.ps.psappbe.services.mail.EmailService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.ContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.UnavailableException;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -33,6 +38,9 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
     private final PasswordEncoder passwordEncoder;
 
     private final ContactService contactService;
+
+    private final EmailService emailService;
+
     @Override
     protected JpaRepository getJpaRepository() {
         return userRepository;
@@ -79,6 +87,36 @@ public class UserServiceImpl extends BaseModelServiceImpl<User, UserEntity> impl
             user.setPassword(passwordEncoder.encode(password));
             super.update(user);
         }
+    }
+
+    @Override
+    public void resetPassword(Long userId) {
+        User user = this.getById(userId, true);
+        if(user != null) {
+            String email = user.getPerson()
+                    .getUniversityContacts().stream()
+                    .filter(contact -> contact.getContactType() == ContactType.EMAIL)
+                    .collect(Collectors.toList())
+                    .get(0)
+                    .getValue();
+            String password = this.getGenericPassword();
+            String emailBody = String.format("Esta es su nueva password %s, puede cambairla cuando quiera.", password);
+            try {
+                emailService.sendSimpleEmail(email, "ps.tecnicatura@gmail.com", "Reseteo de password", emailBody);
+            } catch (UnavailableException e) {
+                throw new RuntimeException(e);
+            }
+            user.setPassword(passwordEncoder.encode(password));
+            super.update(user);
+        }
+    }
+
+    private String getGenericPassword() {
+        int length = 15;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+        return generatedString;
     }
 
     @Override
