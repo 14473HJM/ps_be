@@ -6,6 +6,7 @@ import ar.edu.utn.frc.tup.ps.psappbe.domain.project.Project;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.ProjectStatus;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Comment;
 import ar.edu.utn.frc.tup.ps.psappbe.domain.project.comunication.Conversation;
+import ar.edu.utn.frc.tup.ps.psappbe.domain.user.User;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.ProfessorService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.people.StudentService;
 import ar.edu.utn.frc.tup.ps.psappbe.services.project.CommentService;
@@ -104,8 +105,12 @@ public abstract class ProjectStatusBaseService implements ProjectStatusService {
 
     protected void validateProfessorRequest(Comment comment) {
         if(comment == null ||
-                comment.getCommentator() == null ||
-                comment.getCommentator().getObjectType() != Professor.OBJECT_TYPE) {
+                comment.getCommentator() == null) {
+            throw new IllegalArgumentException("Esta transición solo esta permitida para profesores. " +
+                    "Por favor ponerse en contacto con su tutor de la PS.");
+        }
+        Professor professor = professorService.getById(comment.getCommentator().getId(), true);
+        if(!professor.getObjectType().equals( Professor.OBJECT_TYPE)) {
             throw new IllegalArgumentException("Esta transición solo esta permitida para profesores. " +
                     "Por favor ponerse en contacto con su tutor de la PS.");
         }

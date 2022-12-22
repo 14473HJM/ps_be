@@ -59,10 +59,10 @@ public class ProjectStatusServiceDelivered extends ProjectStatusBaseService impl
 
     }
 
-    @Override
-    public Project moveBack(Project project, Comment comment) {
-        throw new IllegalArgumentException("Transición no permitida. Cuando se entregó el proyecto final " +
-                "ya no puede volver a los estados previos. Si necesita hacer una modificación, debe gestionarse con " +
-                "el tutor de la PS o un Usuario administrador.");
-    }
+//    @Override
+//    public Project moveBack(Project project, Comment comment) {
+//        throw new IllegalArgumentException("Transición no permitida. Cuando se entregó el proyecto final " +
+//                "ya no puede volver a los estados previos. Si necesita hacer una modificación, debe gestionarse con " +
+//                "el tutor de la PS o un Usuario administrador.");
+//    }
 }

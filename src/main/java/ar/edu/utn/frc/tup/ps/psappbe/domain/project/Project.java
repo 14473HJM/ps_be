@@ -69,7 +69,6 @@ public class Project extends CommonFields {
     private List<Student> students; //MVP
     private Professor tutor; //MVP
     private List<Professor> observers; //NO MVP
-    @JsonManagedReference
     private List<Valuation> valuations; //MVP
 
     private List<Meeting> meetings; //NO MVP
